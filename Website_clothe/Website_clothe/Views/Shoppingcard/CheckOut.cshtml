@@ -1,0 +1,28 @@
+﻿<style>
+    .error {
+        color: red;
+        font-size:12px;
+    }
+    /* phần table shopping cart*/
+    
+</style>
+<div class="container-fluid" style="margin-top:160px;margin-bottom:160px;">
+    <div class="row mx-4">
+        @if(ViewBag.Checkcard != null)
+            {
+                  <div class="show_success text-danger fs-3"></div>
+                 <div class="col-6">
+                     @Html.Action("Partial_CheckOut", "Shoppingcard")
+                 </div>
+                 <div class="col-6">
+                     @Html.Action("Partial_Item_pay","Shoppingcard")
+                 </div>
+            }
+        else
+            {
+                <div class="col-12">
+                    <p>Vui lòng lựa chọn sản phẩm trước khi thanh toán</p>
+                </div>
+            }
+    </div>
+</div>

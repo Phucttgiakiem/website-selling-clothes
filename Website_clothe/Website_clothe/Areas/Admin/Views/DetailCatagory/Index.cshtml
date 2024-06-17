@@ -1,0 +1,112 @@
+﻿@model List<Website_clothe.Models.Chitietdanhmuc>
+@{
+    ViewBag.Title = "Chi tiết danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var kq = ViewBag.kq;
+}
+
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>
+                Chi tiêt danh mục
+            </h3>
+            <button class="btn btn-primary " onclick="location.href= ' @Url.Action("Create", "DetailCatagory") ' ">
+                <div class="text-white">Thêm mới</div>
+            </button>
+        </div>
+        <div class="card-body">
+
+            <div class="mb-3">
+                <select id="categorySelect" class="form-select" aria-label="Default select example">
+                    @if (kq.Count == 0)
+                    {
+                        <option value="" selected>Không có dữ liệu</option>
+                    }
+                    else
+                    {
+                        foreach (var item in kq)
+                        {
+                            <option value="@item.Madanhmuc">@item.Tendanhmuc</option>
+                        }
+                    }
+
+                </select>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Hình ảnh</th>
+                        <th>Tên</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID_Chitietdanhmuc</td>
+                            <td><img src="~/Content/img/@item.HinhAnh" class="img-fluid img-thumbnail" style="width:100px;height:100px;" /></td>
+                            <td>@item.Tenchitietdanhmuc</td>
+                            <td>
+                                <a class="btn btn-warning" href="@Url.Action("Edit","DetailCatagory",
+                            new {id_ctdm = item.ID_Chitietdanhmuc})">Sửa</a>
+                                <a class="btn btn-danger" href="@Url.Action("Delete", "DetailCatagory", new { id_ctdm = item.ID_Chitietdanhmuc })">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+        // Gắn sự kiện change cho thẻ select
+        $("#categorySelect").change(function () {
+            // Lấy giá trị đã chọn từ thẻ select
+            $(".table-hover tbody").html("")
+            var selectedOption = $(this).val();
+
+            // Gửi yêu cầu AJAX đến controller
+            $.ajax({
+                type: "GET",
+                url: "/Admin/DetailCatagory/loadtable",
+                data: { id: selectedOption },
+                success: function (data) {
+                    // Cập nhật dữ liệu trong bảng dựa trên dữ liệu nhận được từ controller
+
+                    let html = ""
+
+                    if (data.trim() == "") {
+                        html = "<tr><td>không có dữ liệu tìm thấy</td><td></td><td></td></tr>"
+                    } else {
+                        let obj = JSON.parse(data)
+                        for (i = 0; i < obj.length; i++) {
+                            html += `
+                        <tr><td>${obj[i].mactdm}</td>
+                            <td><img src="/Content/img/${obj[i].hinhanh}" class="img-fluid img-thumbnail" style="width:100px;height:100px;" />
+                           </td>
+                        <td>${obj[i].tenctdm}</td>
+                        <td>
+                            <a class="btn btn-warning" href="/Admin/DetailCatagory/Edit?id_ctdm=${obj[i].mactdm}">Sửa</a>
+                            <a class="btn btn-danger" href="/Admin/DetailCatagory/Delete?id_ctdm=${obj[i].mactdm}">Xóa</a>
+                        </td>
+                        </tr>`
+                        }
+                    }
+
+                    $(".table-hover tbody").html(html);
+                },
+                
+            });
+        });
+    });
+
+</script>
+

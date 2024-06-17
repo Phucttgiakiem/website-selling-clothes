@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Website_clothe.Models.Donmuahang>
+
+@{ 
+    int i = 0;
+}
+@if(Model != null && Model.Any())
+{
+    <div class="container-fluid">
+        <div class="card m-3">
+            <div class="card-header" style="background-color:rgb(0, 148, 255)">
+                <h3 style="color:white">Đơn mua hàng</h3>
+            </div>
+            <div class="card-body">
+                <div class="card-subtitle">
+                    <div class="row justify-content-between">
+                        <div class="col-12">
+                            <p style="font-size:20px;font-weight:400">Lựa chọn ngày bắt đầu và ngày kết thúc</p>
+                        </div>
+                        <div class="col-12">
+                            <div class="row justify-content-between my-2">
+                                
+                                    <div class="col-4">
+                                        <input type="date" class="form-control time--start" />
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="date" class="form-control time--end" />
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="d-flex justify-content-end">
+                                            <input type="button" class="btn btn-success btn_app" value="Tìm" />
+                                        </div>
+                                        
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>STT</th>
+                                <th>Ngày mua</th>
+                                <th>Tổng tiền</th>
+                                <th>Tác vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            @foreach(var item in Model)
+                            {
+                                i += 1;
+                                <tr class="text-center">
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:dd-MM-yyyy}", item.Ngaytao)
+                                    </td>
+                                    <td>
+                                        @item.Tongdonhang đ
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-search btndetailbill" id="@item.ID_Donhang"></i>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="card m-3">
+            <div class="card-header" style="background-color:rgb(0, 148, 255)">
+                <div class="card-title">
+                    <h3 style="color:white">Đơn hàng</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>Không có đơn hàng</p>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+

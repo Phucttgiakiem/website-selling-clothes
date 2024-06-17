@@ -1,0 +1,52 @@
+﻿@model Website_clothe.Models.Size
+@{
+    var result = ViewBag.Loai;
+    ViewBag.Title = "Edit-size-product";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Edit</h2>
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Chỉnh sửa size sản phẩm</h4>
+            <button class="btn btn-info " onclick="location.href= ' @Url.Action("Index", "Sizeproduct") ' ">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Category" asp-action="Edit" method="post">
+                <p style="color:red">
+                    @ViewBag.error
+                </p>
+                <div class="mb-3">
+                    <label class="form-label">Tên size</label>
+                    <input type="text" class="form-control" placeholder="Nhập tên size" value="@Model.TenSize" name="tensize" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên loại sản phẩm</label>
+                    <select name="loaisp" class="form-select" required>
+                        <option value="">Chọn loại sản phẩm</option>
+                        @foreach (var item in result)
+                        {
+                            if (item.ID_Loai == Model.ID_Loai)
+                            {
+                                <option value="@item.ID_Loai" selected>@item.Tenloai</option>
+                            }
+                            else
+                            {
+                                <option value="@item.ID_Loai">@item.Tenloai</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <input type="hidden" value="@Model.ID_Size" name="masize" />
+                <input type="submit" class="btn btn-success" value="Submit" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

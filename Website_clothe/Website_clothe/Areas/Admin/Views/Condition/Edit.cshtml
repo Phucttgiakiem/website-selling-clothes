@@ -1,0 +1,31 @@
+﻿@model Website_clothe.Models.TrangThaiDH
+
+@{
+    ViewBag.Title = "Edit-Condition";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-4 px-4">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Chỉnh sửa trạng thái</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Condition")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Condition" asp-action="Edit" method="post">
+                
+                <div class="mb-3">
+                    <label class="form-label">Tên trạng thái</label>
+                    <input type="text" class="form-control" placeholder="Nhập tên trạng thái" value="@Model.TenTrangThai" name="tentrangthai" required />
+                </div>
+                <input type="hidden" value="@Model.ID_TrangThai" name="id" />
+
+                <input type="submit" class="btn btn-success" value="Submit" />
+
+            </form>
+        </div>
+    </div>
+</div>

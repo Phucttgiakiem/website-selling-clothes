@@ -1,0 +1,75 @@
+﻿@model Website_clothe.Models.Forgetpassword
+
+@{ 
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutlogin.cshtml";
+}
+
+
+<style>
+    .underlayout_forgotp {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 500px;
+        height: max-content;
+        margin: 140px auto;
+        background-color: rgb(255, 255, 255);
+        border-radius: 20px;
+        box-shadow: -1.3px -1.2px 80px 10px;
+        padding: 20px
+    }
+
+    .header_fp {
+        display: flex;
+        justify-content: center
+    }
+
+    .body_fp {
+        display: flex;
+        justify-content: center;
+        align-items: center
+    }
+
+    
+    
+</style>
+<div class="underlayout_forgotp">
+    <div class="header_fp">
+        <h3 class="fs-2">Forgot Password</h3>
+    </div>
+    <div class="body_fp">
+        @using (Html.BeginForm("ForgotPass", "AdminUser", FormMethod.Post, new { @class = "w-100 container" }))
+        {
+            <div class="row justify-content-center">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="col-12">
+                    <div class="form-group my-3">
+                        @Html.TextBoxFor(m => m.username, new { @class = "w-100  form-control", placeholder = "Tên đăng nhập" })
+                        @Html.ValidationMessageFor(m => m.username, "", new { @class = "text-danger" })
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group my-3">
+                        @Html.PasswordFor(m => m.password, new { @class = "w-100  form-control", placeholder = "Mật khẩu" })
+                        @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group my-3">
+                        @Html.PasswordFor(m => m.comfirmpassword, new { @class = "w-100  form-control", placeholder = "Nhập lại mật khẩu" })
+                        @Html.ValidationMessageFor(m => m.comfirmpassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group mt-4">
+
+                        <input type="submit" value="Reset password" style="width: 100%; height: 40px; font-weight: bold; font-family: Arial; border: none;border-radius:8px; outline: none;color:white;background-color:rgb(33, 145, 248);cursor:pointer" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

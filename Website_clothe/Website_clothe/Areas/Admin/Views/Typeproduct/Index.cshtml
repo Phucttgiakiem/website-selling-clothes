@@ -1,0 +1,42 @@
+﻿@model List<Website_clothe.Models.Loai>
+
+@{
+    ViewBag.Title = "Quản lý loại sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>Danh sách thể loại sản phẩm</h3>
+            <button class="btn btn-primary " onclick="location.href= ' @Url.Action("Create", "Typeproduct") ' ">
+                <div class="text-white">Thêm mới</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Mã thể loại</th>
+                        <th>Tên thể loại</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID_Loai</td>
+                            <td>@item.Tenloai</td>
+                            <td>
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.ID_Loai }, new { @class = "btn btn-warning" })
+
+                                <a class="btn btn-danger" href="@Url.Action("Delete", "Typeproduct", new { id = item.ID_Loai })">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

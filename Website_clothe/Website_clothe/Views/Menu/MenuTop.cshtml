@@ -1,0 +1,145 @@
+﻿@model IEnumerable<Website_clothe.Models.Danhmucsanpham>
+@{
+    var kq = ViewBag.ctdm;
+
+}
+
+
+<div id="header">
+    <a href="#" class="logo">FASHIONSHOP</a>
+    <div id="mobile-menu" class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+    </div>
+    <nav class="header__navbar">
+        <ul class="header___navbar-list">
+            <li class="header__navbar-item">
+                <a href="/Home/Index" class="header__navbar-item-link">Trang chủ</a>
+            </li>
+            <li class="header__navbar-item">
+                <a href="#" class="header__navbar-item-link">Danh mục</a>
+                <div class="sub-nav">
+                    @foreach (var item in Model)
+                    {
+                        <ul>
+                            <li><a href="#">@item.Tendanhmuc</a></li>
+                            @foreach (var item2 in kq)
+                            {
+                                if (item2.Madanhmuc == item.Madanhmuc)
+                                {
+                                    <li>
+                                        <a class="" href="/product/Findproductwithcatagory?danhmuc=@item.Madanhmuc-@item2.Tenchitietdanhmuc">@item2.Tenchitietdanhmuc</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    }
+                </div>
+            </li>
+            <li class="header__navbar-item">
+                <a href="#" class="header__navbar-item-link">Liên hệ</a>
+            </li>
+        </ul>
+        <div class="header___search">
+            <form id="searchForm" action="/product/Findproductwithname" method="get">
+                <input class="" type="text" placeholder="Tìm kiếm" name="names" id="searchInput" style="padding-left:10px"/>
+                <button type="button" onclick="submitForm()" class="btn-search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+        <ul class="header___navbar-list">
+            <li class="header__navbar-item">
+                <a href="/Shoppingcard/Index" class="item--sub">
+                    <i class="fas fa-shopping-cart"></i>
+
+                    <p class="">Giỏ hàng</p>
+                </a>
+            </li>
+            @if (HttpContext.Current.Session["username"] == null)
+            {
+                <li class="header__navbar-item">
+                    <a href="/Access/Register" class=" item--sub">
+                        <i class="fas fa-user-plus"></i>
+                        <p class="">Đăng ký</p>
+                    </a>
+                </li>
+                <li class="header__navbar-item">
+                    <a href="/Access/Login" class=" item--sub">
+                        <i class="far fa-user-circle"></i>
+
+                        <p class="">Đăng nhập</p>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="header__navbar-item navbar-account-btn">
+                    <a href="#" class=" item--sub ">
+                        <i class="far fa-user-circle"></i>
+
+                        <p class="">@HttpContext.Current.Session["username"]</p>
+                    </a>
+                    <div class="sub-nav-account">
+                        <ul class="dropdown-account">
+                            <li><a href="/Access/MyInfomation">Thông tin cá nhân</a></li>
+                            <li><a href="/Access/Logout">Thoát</a></li>
+                        </ul>
+                    </div>
+                </li>
+            }
+        </ul>
+    </nav>
+
+</div>
+<script>
+    var header = document.getElementById("header");
+    var mobilemenu = document.getElementById("mobile-menu");
+    var headerHeight = header.clientHeight;
+    mobilemenu.onclick = function () {
+        var isClosed = header.clientHeight === headerHeight;
+        if (isClosed) {
+            header.style.height = 'auto';
+        }
+        else {
+            header.style.height = null;
+        }
+        
+    }
+        //tự động đóng khi chọn menu
+    var menuItems = document.querySelectorAll('a[href*="#"]');
+    for (var i = 0; i < menuItems.length; i++) {
+        var menuItem = menuItems[i];
+        console.log(menuItem.nextElementSibling);
+
+        menuItem.onclick = function (event) {
+            var isParentMenu = this.nextElementSibling && this.nextElementSibling.classList.contains("sub-nav");
+            if (isParentMenu) {
+                event.preventDefault();
+            } else {
+                header.style.height = null;
+            }
+        }
+    }
+    function submitForm() {
+        var searchInput = document.getElementById('searchInput').value;
+        if (searchInput.trim() !== "") {
+            document.getElementById('searchForm').submit();
+        } else {
+            // Bạn có thể thực hiện các hành động khác nếu cần thiết khi input rỗng
+            alert("Vui lòng nhập từ khóa tìm kiếm!");
+        }
+    }
+  
+        var clicksub = false
+        $(".navbar-account-btn").click(() => {
+            if (clicksub == false) {
+                $(".sub-nav-account").css("display", "block");
+                clicksub = true;
+            }
+            else {
+                clicksub = false;
+                $(".sub-nav-account").css("display", "none");
+            }
+        })
+    
+</script>

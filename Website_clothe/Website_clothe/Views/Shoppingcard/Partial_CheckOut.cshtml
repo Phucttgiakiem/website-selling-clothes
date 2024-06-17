@@ -1,0 +1,82 @@
+﻿@model Website_clothe.Models.info_pay
+
+@using (Html.BeginForm("CheckOut", "Shoppingcard", FormMethod.Post, new { @id = "my_info_bill" }))
+{
+
+
+    @Html.AntiForgeryToken()
+    <div class="form-group my-3">
+        <div class="col-12">
+            <label class="form-label">Tên khách hàng</label>
+            @Html.TextBoxFor(m => m.tennguoidung, new { @class = "w-100  form-control", @name = "tennguoidung", required = "required" })
+            <span></span>
+        </div>
+    </div>
+    <div class="form-group my-3">
+        <div class="col-12">
+            <label class="form-label">Email</label>
+            @Html.TextBoxFor(m => m.email, new { @class = "w-100  form-control", @readonly = "true" })
+        </div>
+    </div>
+    <div class="form-group my-3">
+        <div class="col-12">
+            <label class="form-label">Số điện thoại</label>
+            @Html.TextBoxFor(m => m.sdt, new { @class = "w-100  form-control", @readonly = "true" })
+        </div>
+    </div>
+    <div class="form-group my-3">
+        <div class="col-12">
+            <label class="form-label">Địa chỉ</label>
+            @Html.TextBoxFor(m => m.Diachi, new { @class = "w-100  form-control", @name = "Diachi", required = "required" })
+        </div>
+    </div>
+    <div class="form-group my-3">
+        <div class="col-12">
+            <label class="form-label">Phương thức thanh toán</label>
+            @Html.TextBoxFor(m => m.phuongthucthanhtoan, new { @class = "w-100  form-control", @readonly = "true" })
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" onclick="submitForm(event)" class="btn btn-block btn-success">Đặt hàng</button>
+    </div>
+}
+
+<script>
+    function submitForm(event) {
+        event.preventDefault();
+        if ($('#my_info_bill').valid()) {
+            
+            $.ajax({
+                url: '/Shoppingcard/CheckOut',
+                type: 'POST',
+                data: $('#my_info_bill').serialize(),
+                success: function (result) {
+                    if (result.Success) {
+                        location.href = "/Shoppingcard/CheckOutSuccess";
+                    } else {
+                        $('.show_success').html("Quá trình đặt hàng thất bại vui lòng kiểm tra lại thông tin !!");
+                    }
+                },
+                error: function () {
+                    // Xử lý lỗi khi gọi AJAX
+                }
+            });
+        }
+    }
+    $(document).ready(function () {
+        $('#my_info_bill').validate({
+            rules: {
+                'tennguoidung': {
+                    required: true
+                },
+                'Diachi': {
+                    required: true
+                }
+            },
+            messages: {
+                'tennguoidung': 'Bạn chưa nhập tên người mua hàng',
+                'Diachi': 'Bạn chưa nhập địa chỉ giao hàng'
+            }
+        })
+    });
+</script>

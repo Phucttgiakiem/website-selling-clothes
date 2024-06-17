@@ -1,0 +1,48 @@
+﻿@model IEnumerable <Website_clothe.Models.Phieunhap>
+
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>Danh sách phiếu nhập</h3>
+            <button class="btn btn-primary " onclick="location.href= ' @Url.Action("Create", "Importproduct") ' ">
+                <div class="text-white">Thêm mới</div>
+            </button>
+        </div>
+        <div class="card-body">
+           @if (Model != null && Model.Any())
+           {
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Mã Phiếu nhập</th>
+                            <th>Tổng tiền phiếu nhập</th>
+                            <th>Ngày tạo</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ID_Phieunhap</td>
+                                <td>@item.Tongtien đ</td>
+                                <td>@item.Ngaytao.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <a class="btn btn-danger" href="@Url.Action("Delete", "Importproduct", new { id = item.ID_Phieunhap })">Xóa</a>
+                                    <a class="btn btn-info" href="@Url.Action("Detail", "Importproduct", new { id = item.ID_Phieunhap })">Chi tiết</a>
+                                    <a class="btn btn-warning" href="@Url.Action("Edit","Importproduct",new {id = item.ID_Phieunhap})">Sửa</a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+           }
+            else {
+                <div>
+                    <p class="fs-5">Không có phiếu nhập đã tạo</p>
+                </div>
+           }
+         </div>
+    </div>
+</div>

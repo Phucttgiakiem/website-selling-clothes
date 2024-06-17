@@ -1,0 +1,242 @@
+﻿@model Website_clothe.Models.Sanpham
+@{
+    var spbt = ViewBag.bienthesanpham;
+    var hinhanh = ViewBag.hinhsanpham;
+    var mausp = ViewBag.Mausanpham;
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .slick-track{
+        margin:10px 0;
+       
+    }
+    .btnAddtoCard:hover{
+        background-color:rgb(213, 51, 51)
+    }
+    .btnAddtoCard{
+        width:100%;
+        height:50px;
+        border:0;
+        background-color:rgb(255, 62, 62);
+        color:white;
+        font-size:20px;
+        font-weight:bold;
+        font-family:Arial;
+        cursor:pointer;
+    }
+</style>
+<div class="container" style="margin-top:150px">
+    <div class="row justify-content-center">
+        <div class="col-7">
+            @if (hinhanh != null && hinhanh.Count > 0)
+            {
+                <div class="slider--one d-flex justify-content-center card-bigger1">
+                    @foreach (var item in hinhanh)
+                    {
+                        <div class="d-flex justify-content-center">
+                            <img src="~/Content/img/@item.TenAnh" style="width:500px;height:500px" alt="" />
+                        </div>
+                    }
+                </div>
+                <div class="d-flex flex-column justify-content-between slider-nav mt-2 px-5 card-bigger2">
+                   
+                        @foreach (var item in hinhanh)
+                        {
+                            <div class="d-flex justify-content-center align-items-center" style="width:120px;height:120px;">
+                                <img src="~/Content/img/@item.TenAnh" style="width:100px;height:100px" />
+                            </div>
+
+
+                        }
+                    
+                    
+                </div>
+            }
+            else
+            {
+                <div class="d-flex flex-row-reverse justify-content-center card-bigger1">
+                        <div class="d-flex justify-content-center">
+                            <img src="~/Content/img/namempty.jpg" style="width:500px;height:500px" />
+                        </div>
+                </div>
+            }
+        </div>
+        <div class="col-4">
+            <div class="d-flex flex-column ps-3">
+                <div class="py-2">
+                    <p class="fw-bolder fs-5">@Model.Tensanpham</p>
+                    
+                    <div class="d-flex flex-row">
+                        <p id="code_pd" class="fw-normal fs-6 d-block m-0" style="width:max-content" >Mã sp: @Model.Masanpham</p>
+                        <img class="soldout" src="~/Content/img/sold_out.png" style="width:40px;height:40px;margin-left:20px;display:none" />
+                    </div>
+                </div>
+                <div class="py-2">
+                    <p class="fw-bold fs-5">@String.Format("{0:#,##0}", Model.Giaban) - đ</p>
+                </div>
+                <div class="py-2">
+                    <div>
+                        <p id="code_color" class="fw-normal fs-6">Màu sắc:</p>
+                    </div>
+
+                    <div>
+                        <ul id="sub_color" class="p-0 m-0 d-flex flex-row">
+                            @foreach (var item in mausp)
+                            {
+
+                                <li class="mx-1" style="list-style-type:none; width:max-content">
+                                    <div class="color-box" style="background-color:rgb(226, 226, 226);width:40px;height:40px;padding:9px;">
+                                        <div style="width:22px;height:22px;border:3px solid rgb(243, 243, 243);border-radius:25px;background-color:@item.Tenmau"></div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="py-2">
+                    <div>
+                        <p id="code_size" class="fw-normal fs-6">Kích cỡ:</p>
+                    </div>
+                    @*lấy size động khi thay đổi color*@
+                    <div id="size-paren" class="d-flex flex-row">
+                       
+                    </div>
+                </div>
+                <div class="py-2">
+                    <input type="button" value="Thêm vào giỏ hàng" class="btnAddtoCard" data-id="@Model.ID_Loai-@Model.Masanpham" />
+                </div>
+                <div class="py-2">
+                    <p class="fw-bold fs-5">Mô tả</p>
+                    <p class="fw-medium fs-6 " style="text-align: justify;">
+                        @Model.Mota
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $(document).on('click', '#sub_color .color-box', function () {
+
+            //lấy mã màu thẻ div
+            $('#sub_color .color-box').css("border", "0px");
+            $(this).css("border", "1px solid black");
+            var result = $(this).children().css("background-color");
+
+            //đổi mã màu rgb sang hex
+            var result_of_color = extractRGB(result);
+
+            //gán mã màu vào thẻ p
+            var p = $('#code_color').text();
+            var result_change = rgbToHex(result_of_color.r, result_of_color.g, result_of_color.b)
+            var splittext = p.split(":")[0] + ": " + result_change
+            $('#code_color').text(splittext);
+
+            var masp = $('#code_pd').text()
+            masp = masp.split(":")[1].trim()
+            //reset thẻ p size
+            var p = $('#code_size').text();
+            var splittext = p.split(":")[0] + ": ";
+            $('#code_size').text(splittext);
+            $.ajax({
+                url: '/product/checksize',
+                type: 'POST',
+                data: {
+                    idsp: masp,
+                    mau: result_change,
+                },
+                success: function (rs) {
+                    console.log(rs)
+                    var div = $("#size-paren").empty(); // Xóa nội dung cũ của div
+                    $.each(rs, function (index, value) {
+                        var span = $("<span></span>").text(value.TenSize);
+                        span.addClass('size-box')
+                        span.css({
+                            "margin": "5px",
+                            "padding": "10px",
+                            "width": "40px",
+                            "line-height": "100%",
+                            "border": "1px solid rgb(128, 128, 128)",
+                            "border-radius": "10px",
+                            "text-align": "center",
+                            "cursor": "pointer"
+                        });
+                        span.attr('id', `${value.Soluongton}`)
+                        div.append(span); // Thêm span vào div
+                    });
+                    
+
+                }
+
+            })
+        });
+
+        $(document).on('click', '#size-paren .size-box', function () {
+            
+            var vl = $(this).attr("id");
+            if (vl == 0) {
+                $('.soldout').css({
+                    'display': 'block'
+                })
+            }
+            else {
+                $('.soldout').css({
+                    'display': 'none'
+                })
+            }
+            $('#size-paren .size-box').css("border", "1px solid rgb(128, 128, 128)");
+            $(this).css("border", "2px solid black");
+            var result = $(this).text()
+            //gán mã size vào thẻ p
+
+            var p = $('#code_size').text();
+
+            var splittext = p.split(":")[0] + ": " + result;
+            $('#code_size').text(splittext);
+
+            
+        })
+
+    });
+    //phương thức trả json mã hex
+    function extractRGB(rgbString) {
+        var matches = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        var r = parseInt(matches[1]);
+        var g = parseInt(matches[2]);
+        var b = parseInt(matches[3]);
+        return { r: r, g: g, b: b };
+    }
+    //tạo chuỗi mã màu hex
+    function rgbToHex(r, g, b) {
+        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+    //đổi mã màu hex
+    function componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    $(".slider--one").slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '.slider-nav'
+    });
+    $(".slider-nav").slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        asNavFor: '.slider--one',
+        //      dots: true,
+        centerMode: true,
+        focusOnSelect: true,
+        prevArrow: `<button type='button' class='slick-left slick-arr'><i class="fas fa-arrow-left"></i></button>`,
+        nextArrow: `<button type='button' class='slick-right slick-arr'><i class="fas fa-arrow-right"></i></button>`
+    });
+</script>

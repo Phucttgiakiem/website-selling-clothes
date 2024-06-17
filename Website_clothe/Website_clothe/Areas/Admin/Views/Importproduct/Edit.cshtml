@@ -1,0 +1,187 @@
+﻿@model Website_clothe.Models.Nhacungcap
+
+@{
+    var sanpham = ViewBag.sanphams;
+    var phieunhap = ViewBag.Phieunhap;
+    var billimport = ViewBag.Bill;
+}
+<style>
+    .colorofdiv {
+        width: 40px;
+        height: 40px;
+        border-radius: 35px;
+    }
+</style>
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Sửa thông tin phiếu nhập</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Importproduct")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+
+                    <form method="post" action="@Url.Action("Edit", "Importproduct")">
+
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Nhà cung cấp</label>
+                                    @Html.DropDownListFor(model => model.Manhacungcap, ViewBag.Nhacungcap as IEnumerable<SelectListItem>, "Chọn nhà cung cấp", new { @class = "form-select selectprovide" })
+                                    @Html.ValidationMessageFor(model => model.Manhacungcap, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Địa chỉ</label>
+                                    @Html.TextBoxFor(model => model.Diachi, new { type = "text", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Số điện thoại</label>
+                                    @Html.TextBoxFor(model => model.SoDT, new { type = "text", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Tổng tiền nhập (đ)</label>
+                                    <input type="number" class="form-control" id="moneyofimport" value="@phieunhap.Tongtien" step="any" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Ngày nhập</label>
+                                    <input type="date" class="form-control" id="datetimebill" value="@String.Format("{0:yyyy-MM-dd}", phieunhap.Ngaytao)"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Ghi chú</label>
+                                    <textarea class="form-control" rows="3" id="textnote" >@phieunhap.GhiChu</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group my-3">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-success applyimportbill" data-id="@phieunhap.ID_Phieunhap">Update</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Size</th>
+                                <th>
+                                    Màu sắc
+                                </th>
+                                <th>
+                                    Số lượng
+                                </th>
+                                <th>
+                                    Đơn giá (đ)
+                                </th>
+                                <th>
+                                    Thành tiền
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @foreach (var item in billimport)
+                            {
+                                int thanhtien = @item.quality * @item.prices;
+                                <tr>
+                                    <td>@item.idsp</td>
+                                    <td>@item.namepd</td>
+                                    <td>@item.sizes</td>
+                                    <td class="d-flex justify-content-center">
+
+                                        <div style="width:40px;height:40px;border: 1px solid rgb(10, 9, 9); border-radius:20px; background-color:@item.color">
+                                        </div>
+
+                                    </td>
+                                    <td>@item.quality</td>
+                                    <td>@String.Format("{0:#,##0}", item.prices)</td>
+                                    <td>
+                                        @String.Format("{0:#,##0}", thanhtien) đ
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <div class="mx-2 my-2 row">
+                        <div class="col-12"><span class="fs-5" style="font-family:Arial">Ghi chú:</span></div>
+                        <div class="col-12"><span style="font-family:Arial">@phieunhap.GhiChu</span></div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mx-2 my-2 row">
+                        <div class="col-6"><p class="fs-5" style="font-family:Arial">Tổng đơn:</p></div>
+                        <div class="col-6"><p style="font-family:Arial;text-align:end">@String.Format("{0:#,##0}", phieunhap.Tongtien) đ</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('body').on('change', '.selectprovide', function () {
+            var resuil = $(this).val()
+            if (resuil == '') {
+                $('#Diachi').val("")
+                $('#SoDT').val("")
+                return
+            }
+            $.ajax({
+                url: '/Admin/Importproduct/getinfoprovider',
+                type: 'POST',
+                data: {
+                    idpro: resuil
+                },
+                success: function (rs) {
+                    $('#Diachi').val(rs.diachi)
+                    $('#SoDT').val(rs.soDT)
+                }
+            })
+        })
+        $('body').on('click', '.applyimportbill', function (e) {
+            e.preventDefault()
+            var unitprovide = $('.selectprovide').val()
+            var textnote = $('#textnote').val()
+            var date = $('#datetimebill').val()
+            var maphieu = $(this).data('id')
+            // detailbill = JSON.stringify(detailbill);
+            if (unitprovide == '') {
+                alert('Bạn chưa cung cấp thông tin nhà cung cấp');
+                return
+            }
+            $.ajax({
+                url: '/Admin/Importproduct/Edit',
+                type: 'POST',
+                data: {
+                    provide: unitprovide,
+                    note: textnote,
+                    Date: date,
+                    code: maphieu
+                },
+                success: function (response) {
+                    window.location.href = response.redirectTo;
+                }
+            })
+        })
+    })
+</script>

@@ -1,0 +1,130 @@
+﻿@model IEnumerable<Website_clothe.Models.detailbillimp>
+    
+@{ 
+    var nhacungcap = ViewBag.Nhacungcap;
+    var phieunhap = ViewBag.Phieunhap;
+    var idphieu = phieunhap.ID_Phieunhap;
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Chi tiết phiếu nhập</h4>
+            <div class="card-tool">
+                <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Importproduct")'">
+                    <div class="text-white">Quay lại</div>
+                </button>
+                <a class="btn btn-danger printbill" id="@idphieu" href="#">
+                    <div class="text-white">In hóa đơn</div>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mx-2 my-2 row">
+                        <div class="col-3"><span class="fs-5" style="font-family:Arial">Mã phiếu nhập:</span></div>
+                        <div class="col-9"><span style="font-family:Arial">@phieunhap.ID_Phieunhap</span></div>
+                    </div>
+                    <div class="mx-2 my-2 row">
+                        <div class="col-3"><span class="fs-5" style="font-family:Arial">Nhà cung cấp:</span></div>
+                        <div class="col-9"><span style="font-family:Arial">@nhacungcap.Manhacungcap - @nhacungcap.Tennhacungcap</span></div>
+                    </div>
+                    <div class="mx-2 my-2 row">
+                        <div class="col-3"><span class="fs-5" style="font-family:Arial">Địa chỉ:</span></div>
+                        <div class="col-9"><span style="font-family:Arial">@nhacungcap.Diachi</span></div>
+                    </div>
+                    <div class="mx-2 my-2 row">
+                        <div class="col-3"><span class="fs-5" style="font-family:Arial">Số điện thoại:</span></div>
+                        <div class="col-9"><span style="font-family:Arial">@nhacungcap.SoDT</span></div>
+                    </div>
+                    <div class="mx-2 my-2 row">
+                        <div class="col-3"><span class="fs-5" style="font-family:Arial">Người lập phiếu:</span></div>
+                        <div class="col-9"><span style="font-family:Arial">@phieunhap.NguoiLapPhieu</span></div>
+                    </div>
+                    <div class="mx-2 my-2 row">
+                        <div class="col-3"><span class="fs-5" style="font-family:Arial">Ngày tạo:</span></div>
+                        <div class="col-9"><span style="font-family:Arial">@phieunhap.Ngaytao</span></div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Size</th>
+                                <th>
+                                    Màu sắc
+                                </th>
+                                <th>
+                                    Số lượng
+                                </th>
+                                <th>
+                                    Đơn giá (đ)
+                                </th>
+                                <th>
+                                    Thành tiền
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @foreach (var item in Model)
+                            {
+                                int thanhtien = @item.quality * @item.prices;
+                                <tr>
+                                    <td>@item.idsp</td>
+                                    <td>@item.namepd</td>
+                                    <td>@item.sizes</td>
+                                    <td class="d-flex justify-content-center">
+                                        
+                                            <div style="width:40px;height:40px;border: 1px solid rgb(10, 9, 9); border-radius:20px; background-color:@item.color">
+                                            </div>
+                                        
+                                    </td>
+                                    <td>@item.quality</td>
+                                    <td>@String.Format("{0:#,##0}", item.prices)</td>
+                                    <td>
+                                        @String.Format("{0:#,##0}", thanhtien) đ
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <div class="mx-2 my-2 row">
+                        <div class="col-12"><span class="fs-5" style="font-family:Arial">Ghi chú:</span></div>
+                        <div class="col-12"><span style="font-family:Arial">@phieunhap.GhiChu</span></div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mx-2 my-2 row">
+                        <div class="col-6"><p class="fs-5" style="font-family:Arial">Tổng đơn:</p></div>
+                        <div class="col-6"><p style="font-family:Arial;text-align:end">@String.Format("{0:#,##0}", phieunhap.Tongtien) đ</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $(".printbill").on("click", function (e) {
+            e.preventdefault
+            var idbill = $(this).attr('id'); // Thay thế giá trị idbill bằng ID thực tế của hóa đơn
+            
+            $.ajax({
+                url: '/Admin/Importproduct/Generatepdf',
+                type: 'GET',
+                data: { idbill: idbill },
+                success: function(response) {
+                   
+                    location.href = "/Resource/Pdf/"+ response;
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

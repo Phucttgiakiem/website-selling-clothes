@@ -1,0 +1,355 @@
+﻿@model Website_clothe.Models.Nhacungcap
+
+@{ 
+    var sanpham = ViewBag.sanphams;
+
+    // Lấy ngày hiện tại
+    var today = DateTime.Today;
+    // Format ngày thành chuỗi YYYY-MM-DD
+    var formattedDate = today.ToString("yyyy-MM-dd");
+}
+<style>
+    .colorofdiv {
+        width:40px;
+        height:40px;
+        border-radius:35px;
+        
+    }
+</style>
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Thêm mới phiếu nhập</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Importproduct")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    
+                    <form method="post" action="@Url.Action("Create", "Importproduct")">
+                       
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Nhà cung cấp</label>
+                                    @Html.DropDownListFor(model => model.Manhacungcap, ViewBag.Nhacungcap as IEnumerable<SelectListItem>, "Chọn nhà cung cấp", new { @class = "form-select selectprovide" })
+                                    @Html.ValidationMessageFor(model => model.Manhacungcap, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Địa chỉ</label>
+                                    @Html.TextBoxFor(model => model.Diachi, new { type = "text", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Số điện thoại</label>
+                                    @Html.TextBoxFor(model => model.SoDT, new { type = "text", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Tổng tiền nhập (đ)</label>
+                                    <input type="number" class="form-control" id="moneyofimport" value="0" step="any" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Ngày nhập</label>
+                                    <input type="date" class="form-control" id="datetimebill" value="@formattedDate" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="form-label my-2">Ghi chú</label>
+                                    <textarea class="form-control" rows="3" id="textnote"></textarea>
+                                </div>
+                            </div>
+                            <textarea id="listctpn" class="form-control d-none" name="listctpn"></textarea>
+                            <div class="form-group my-3">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-success applyimportbill">Create bill</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+                <div class="col-12">
+                    
+                        <div class="row">
+
+                            <div class="col-9  mx-auto">
+                                <div class="row-cols-1">
+                                    <h3 class="text-center">Lựa chọn sản phẩm</h3>
+                                    <div class="form-group col-9 my-2 mx-auto">
+                                        <label class="form-label my-2">Tên sản phẩm:</label>
+                                        <select class="form-select" id="selectproduct">
+                                            <option value="" selected>-- Lựa chọn sản phẩm --</option>
+                                            @foreach (var item in sanpham)
+                                            {
+                                                <option value="@item.Masan_phambienthe">@item.Masan_phambienthe - @item.Ten_sanpham</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-9 my-2 mx-auto">
+                                        <label class="form-label my-2">Chọn size:</label>
+                                        <input class="form-control" name="size" value="" readonly />
+                                    </div>
+                                    <div class="form-group col-9 my-2 mx-auto">
+                                        <label class="form-label">Chọn màu:</label>
+                                        <input type="color" class="my-3 form-control form-control-color" value="" name="tenmau" disabled readonly />
+                                        <input class="form-control" name="mau" value="" readonly />
+                                    </div>
+                                    <div class="form-group col-9 my-2 mx-auto">
+                                        <label class="my-2 form-label">Giá nhập: (đv đồng)</label>
+                                        <input type="number" class="my-1 form-control" name="pricepr" value="0" readonly min="0" />
+                                    </div>
+                                    <div class="form-group col-9 my-2 mx-auto">
+                                        <label class="my-2 form-label">Số lượng</label>
+                                        <input type="number" class="my-1 form-control" name="soluong" value="1" min="0" />
+                                    </div>
+                                    <div class="form-group col-9 my-4 mx-auto text-center">
+
+                                        <button id="addimport" class="btn btn-success">Thêm sản phẩm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Size</th>
+                                <th>
+                                    Màu sắc
+                                </th>
+                                <th>
+                                    Số lượng
+                                </th>
+                                <th>
+                                    Đơn giá (đ)
+                                </th>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody id="listctpnss" class="text-center">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        
+        $('body').on('change', '.selectprovide', function () {
+            var resuil = $(this).val()
+            if (resuil == '') {
+                $('#Diachi').val("")
+                $('#SoDT').val("")
+                return
+            }
+            $.ajax({
+                url: '/Admin/Importproduct/getinfoprovider',
+                type: 'POST',
+                data: {
+                    idpro: resuil
+                },
+                success: function (rs) {
+                    $('#Diachi').val(rs.diachi)
+                    $('#SoDT').val(rs.soDT)
+                }
+            })
+        })
+        $('body').on('change', '#selectproduct', function () {
+            var resuil = $(this).val()
+            if (resuil != "") {
+                $.ajax({
+                    url: '/Admin/Importproduct/getsizeandcolor',
+                    type: 'POST',
+                    data: {
+                        idpro : resuil
+                    },
+                    success: function (rs) {
+                        $('input[name="size"]').val("");
+                        $('input[name="mau"]').val("")
+                        $('input[name="size"]').val(rs.size.tensize);
+                        $('input[name="mau"]').val(rs.color.Tenmau)
+                        var codecolor = rs.color.Tenmau.split(" - ")[0].trim();
+                        $('input[name="tenmau"]').val(codecolor)
+                        $('input[name="pricepr"]').val(rs.price);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText); // Hiển thị thông tin lỗi (nếu có)
+                    }
+                })
+            }
+        })
+        let lsctpn = []
+        const textarealistctpn = $('#listctpn')
+        const tbodylistctpnss = $('#listctpnss')
+
+        function addchitietphieunhap() {
+            var vl = $('#selectproduct').find('option:selected').text()
+            var infosp = vl.split(" - ")
+            var sl = $('input[name="soluong"]').val()
+            var size = $('input[name="size"]').val()
+            var tenmau = $('input[name="mau"]').val()
+            var price = $('input[name="pricepr"]').val()
+            for (i = 0; i < lsctpn.length; i++) {
+                if (lsctpn[i].idsp == infosp[0]) {
+                    lsctpn[i].quality = parseInt(lsctpn[i].quality) + parseInt(sl)
+                    alert('Đã thêm sản phẩm vào phiếu nhập');
+                    update_thanhtien();
+                    return;
+                }
+            }
+            if (sl < 1) {
+                alert('Số lượng sản phẩm không hợp lệ')
+                return;
+            }
+            const ctpn = {
+                idsp: parseInt(infosp[0]),
+                namepd : infosp[1],
+                sizes: size.split(" - ")[1],
+                color: tenmau.split(" - ")[0],
+                quality: sl,
+                prices : price
+            }
+            lsctpn.push(ctpn);
+            
+            alert('Đã thêm sản phẩm vào phiếu nhập')
+            
+            update_thanhtien();
+            return;
+        }
+        function update_thanhtien() {
+            var total = 0;
+            for (i = 0; i < lsctpn.length; i++) {
+                total += lsctpn[i].quality * lsctpn[i].prices;
+            }
+            $('#moneyofimport').val(total);
+            update_phieunhap()
+        }
+        
+        function update_phieunhap() {
+            
+            $('#listctpnss').html("");
+            for (i = 0; i < lsctpn.length; i++) {
+                const tr = $('<tr>')
+                const tdcode = $('<td>')
+                tdcode.text(lsctpn[i].idsp)
+
+                const tdten = $('<td>')
+                tdten.text(lsctpn[i].namepd)
+
+                const tdsize = $('<td>')
+                tdsize.text(lsctpn[i].sizes)
+
+                const div = $('<div>')
+                div.addClass('colorofdiv')
+                div.css({
+                    'background-color': `${lsctpn[i].color}`
+                })
+
+                const tdcolor = $('<td>')
+                tdcolor.css({
+                    'display': 'flex',
+                    'justify-content': 'center'
+                })
+                tdcolor.append(div)
+
+                const tdquality = $('<td>')
+                tdquality.text(lsctpn[i].quality)
+
+                const tdprice = $('<td>')
+                tdprice.text(lsctpn[i].prices)
+
+
+                const ii = $('<i>').addClass('far fa-trash-alt');
+                ii.addClass(' submitdelete')
+                ii.css({
+                    'cursor': 'pointer'
+                })
+                
+                ii.attr('data-id', `${lsctpn[i].idsp}`)
+                const tdbin = $('<td>').append(ii)
+
+                //bắt xự kiện bấm và xóa dữ liệu
+
+
+
+
+                textarealistctpn.val(JSON.stringify(lsctpn))
+                tr.append(tdcode, tdten, tdsize, tdcolor, tdquality, tdprice, tdbin)
+
+                tbodylistctpnss.append(tr)
+                
+            }
+        }
+
+        $('body').on('click', '#addimport', function () {
+            addchitietphieunhap()
+            return
+        })
+        $('body').on('click', '.submitdelete', function () {
+            const id = $(this).attr('data-id')
+            const tr = $(this).parent().parent()
+
+            tr.remove();
+            lsctpn = lsctpn.filter(ctpn => ctpn.idsp != id)
+            textarealistctpn.val(JSON.stringify(lsctpn));
+            update_thanhtien();
+        })
+        $('body').on('click', '.applyimportbill', function (e) {
+            e.preventDefault()
+            var unitprovide = $('.selectprovide').val()
+            var totalofbill = $('#moneyofimport').val()
+            var detailbill = $('#listctpn').val()
+            var textnote = $('#textnote').val()
+            var date = $('#datetimebill').val()
+           // detailbill = JSON.stringify(detailbill);
+            if (unitprovide == '') {
+                alert('Bạn chưa cung cấp thông tin nhà cung cấp');
+                return
+            }
+            if (totalofbill == 0) {
+                alert('Bạn chưa chọn sản phẩm nhập');
+                return
+            }
+
+            var datamegajson = {
+                    idnhacungcap: unitprovide,
+                    totalbill: totalofbill,
+                    detailbill: JSON.parse(detailbill),
+                    note: textnote,
+                    datatime: date
+                }
+
+            $.ajax({
+                url: '/Admin/Importproduct/Create',
+                type: 'POST',
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify(datamegajson),
+                success: function (response) {
+                    window.location.href = response.redirectTo;
+                }
+            })
+        })
+        
+    })
+</script>

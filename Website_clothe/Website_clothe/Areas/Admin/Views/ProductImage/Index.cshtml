@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Website_clothe.Models.HinhanhSanpham>
+@{ 
+    Layout = "/Areas/Admin/Views/Shared/LayoutEmpty.cshtml";
+}
+<style>
+    .listimage{
+        list-style:none;
+        margin:0;
+        padding:0;
+        display:flex;
+        flex-direction:row;
+        width:max-content;
+        
+    }
+    .listimage li{
+        display:inline-block;
+        position:relative;
+    }
+    .b-btn {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        margin-top:10px;
+    }
+</style>
+<div class="card" style="width:max-content;min-width:630px;">
+    <div class="card-header d-flex flex-row justify-content-between">
+        <h3>Hình sản phẩm</h3>
+        <div>
+            <button type="button" class="btn btn-danger btndeleteAll" data-id="@ViewBag.ProductId">
+                Xóa tất cả
+            </button>
+            <input type="button" value="Upload" class="btn btn-success" onclick="LoadImage('txtimage')"/>
+        </div>
+    </div>
+    <div class="card-body">
+        <ul class="listimage">
+            @if(Model != null)
+            {
+                foreach(var item in Model)
+                {
+                    <li id="ps_@item.ID_Image" class="d-flex flex-column align-items-center mx-2" style="height:250px;">
+                        <div>
+                            <img src="~/Content/img/@item.TenAnh" width="200" height="200" />
+                        </div>
+                        <div class="b-btn">
+                            <a href="#" data-id="@item.ID_Image" class="btn btn-sm btn-danger btndelete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+<script>
+    function LoadImage(field) {
+        var finder = new CKFinder();
+        finder.selectActionFunction = (fileurl) => {
+           
+            AddImage(@ViewBag.ProductId, fileurl);
+            
+        };
+        finder.popup();
+    }
+    function AddImage(id, url) {
+        $.ajax({
+            url: '/Admin/ProductImage/AddImage',
+            type: 'POST',
+            data: { productId: id, url: url },
+            success: function (rs) {
+                if (rs.Success) {
+                    window.location.reload();
+                }
+            }
+        })
+    }
+    $(document).ready(function () {
+        $('body').on('click', '.btndelete', function () {
+            var id = $(this).data('id');
+            
+            var conf = confirm('bạn có chắc chắn muốn xóa ảnh này không ? ');
+            if (conf === true) {
+                $.ajax({
+                    url: '/Admin/ProductImage/DeleteItem',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            $('#ps_' + id).remove();
+                            
+                        }
+                    }
+                })
+            }
+           
+        })
+        $('body').on('click', '.btndeleteAll', function () {
+            var id = $(this).data('id');
+            var conf = confirm('bạn có chắc chắn muốn xóa tất cả các ảnh ?');
+            if (conf === true) {
+                $.ajax({
+                    url: '/Admin/ProductImage/DeleteAllItem',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            window.location.reload();
+                        }
+                        else {
+                            alert("không có ảnh để xóa");
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>

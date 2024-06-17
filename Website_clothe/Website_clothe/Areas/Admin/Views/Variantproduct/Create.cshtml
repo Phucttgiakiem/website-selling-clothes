@@ -1,0 +1,64 @@
+﻿@model Website_clothe.Models.Bienthesanpham
+
+@{
+
+    ViewBag.Title = "Add-variantproduct";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Thêm biến thê sản phẩm mới</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Variantproduct")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Create", "Variantproduct", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    <label class="form-label">Tên sản phẩm</label>
+                    @Html.DropDownListFor(model => model.ID_Sanpham,ViewBag.sanpham as IEnumerable<SelectListItem>, "--- chọn sản phẩm ---", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.ID_Sanpham, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Size sản phẩm</label>
+                    @Html.DropDownListFor(model => model.SizeID, ViewBag.sizes as IEnumerable<SelectListItem>, "---- Chọn size sản phẩm ----", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.SizeID, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Màu sản phẩm</label>
+                    @Html.DropDownListFor(model => model.ID_Mau,ViewBag.maus as IEnumerable<SelectListItem>, "---- Chọn màu sản phẩm ----", new { @class = "form-select selectcolor" })
+                    @Html.ValidationMessageFor(model => model.ID_Mau, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3" >
+                    <div id="imagesPreview" style="width:100px;height:30px;border:2px solid rgb(8, 8, 8); background-color:rgb(0, 255, 255);border-radius:15px"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Số lượng tồn</label>
+                    @Html.TextBoxFor(model => model.Soluongton, new { type = "number", min = "0", value = "0", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Soluongton, "", new { @class = "text-danger" })
+                </div>
+                
+
+                <input type="submit" class="btn btn-success" value="Submit" />
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('body').on('change', '.selectcolor',function (){
+            var lis = $(this).find('option:selected').text();
+            if (lis != "---- Chọn màu sản phẩm ----") {
+                $('#imagesPreview').css({
+                    'background-color' : `${lis}`
+                })
+            }
+        })
+    })
+</script>

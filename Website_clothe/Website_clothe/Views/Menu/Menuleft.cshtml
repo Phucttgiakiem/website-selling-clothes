@@ -1,0 +1,223 @@
+﻿@model IEnumerable<Website_clothe.Models.Loai>
+@{ 
+    var item1 = ViewBag.size;
+    
+    var item3 = ViewBag.thuonghieu;
+}
+
+<div class="container-filter col-2">
+    <p class="text-center fs-5 fw-medium">Bộ lọc</p>
+    <div class="choosehistory">
+        <p>Đã chọn</p>
+        <div id="main-chhis">
+
+        </div>
+    </div>
+    <div class="sidebar_type_and_size d-flex flex-column">
+        @if (Model != null && Model.Any())
+        {
+            foreach(var item in Model){
+                <div>
+                    <a style="text-decoration:none; color:rgb(27, 27, 27); font-size:20px" href="#">@item.Tenloai</a>
+                </div>
+                <ul class="d-flex flex-row flex-wrap justify-content-between p-0">
+
+                    @foreach (var sub in item1)
+                    {
+                        if (sub.ID_Loai == item.ID_Loai)
+                        {
+                            <li id="@item.ID_Loai"><a class="itemfl" href="#" >@sub.TenSize</a></li>
+                        }
+
+                    }
+                </ul>
+            }
+        }
+    </div>
+    <div class="order_sidebar d-flex flex-column">
+        <div class="trademark1234 d-flex flex-column">
+            <p>Thương hiệu</p>
+            @foreach(var item in item3)
+            {
+                <a href="/product/Findproductwithbrand?id=@item.Mathuonghieu">@item.Tenthuonghieu</a>
+            }
+        </div>
+        <div class="wrapper">
+            <div class="title-price">
+                <p>Khoảng giá (đv: đồng)</p>
+            </div>
+            <div class="price-in">
+                <div class="field">
+                    <input type="number" class="in-min bg-body-tertiary" value="0" />
+
+                </div>
+                <div class="field">
+                    <input type="number" class="in-max bg-body-tertiary" value="1500000" />
+
+                </div>
+            </div>
+            <div class="slider_x">
+                <div class="pro"></div>
+            </div>
+            <div class="range-in">
+                <input type="range" class="range-min" min="0" max="1500000" value="0" />
+                <input type="range" class="range-min" min="0" max="1500000" value="1500000" />
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var selectedConditions = {
+        sizes: "",
+        minPrice: 0,
+        maxPrice: 0
+    };
+
+   
+
+    function updateSelectedConditions() {
+        var selectedSizes = selectedConditions.sizes;
+        var selectedPrice = selectedConditions.minPrice + ' - ' + selectedConditions.maxPrice;
+
+        var selectedConditionsDiv = document.getElementById('main-chhis');
+        selectedConditionsDiv.innerHTML = '';
+        
+        if (selectedConditions.minPrice != selectedConditions.maxPrice) {
+            var div1 = document.createElement('div');
+            div1.className = "h_price";
+            var ii = document.createElement('i');
+            ii.className = "fas";
+            ii.className += " fa-times"
+            
+            ii.onclick = function () {
+                deletetab(div1);
+            };
+            var p1 = document.createElement('p');
+            p1.className = "text_h-price";
+            p1.textContent = selectedPrice;
+            p1.style.fontSize = "13px"
+            div1.appendChild(ii)
+            div1.appendChild(p1);
+            selectedConditionsDiv.appendChild(div1);
+        }
+        if (selectedConditions.sizes != "") {
+            var div2 = document.createElement('div');
+            div2.className = "h_size";
+            var ii = document.createElement('i');
+            ii.className = "fas";
+            ii.className += " fa-times"
+            ii.onclick = function () {
+                deletetab(div2);
+            };
+            var p2 = document.createElement('p');
+            p2.className = "text_h-price";
+            p2.textContent = selectedSizes;
+            p2.style.fontSize = "13px"
+            div2.appendChild(ii)
+            div2.appendChild(p2);
+            selectedConditionsDiv.appendChild(div2);
+        }
+        
+
+    }
+
+    function valumnofprice() {
+        const rangein = document.querySelectorAll('.range-in input');
+        const pricein = document.querySelectorAll('.price-in input');
+        const progress = document.querySelector('.slider_x .pro');
+
+        let price = 1000;
+
+        rangein.forEach(input => {
+            input.addEventListener('input', e => {
+                let minVal = parseInt(rangein[0].value);
+                let maxVal = parseInt(rangein[1].value);
+                
+                // Tính khoảng cách giữa hai đầu
+                let range = maxVal - minVal;
+
+                // Nếu khoảng cách nhỏ hơn hoặc bằng "price," ngăn đầu kia thay đổi giá trị
+                if (range <= price) {
+                    if (e.target === rangein[0]) {
+                        rangein[1].value = minVal + price;
+                    } else {
+                        rangein[0].value = maxVal - price;
+                    }
+                } else {
+                    pricein[0].value = minVal;
+                    pricein[1].value = maxVal;
+                    progress.style.left = (minVal / rangein[0].max) * 100 + '%';
+                    progress.style.right = 100 - (maxVal / rangein[1].max) * 100 + '%';
+                }
+                selectedConditions.minPrice = minVal;
+                selectedConditions.maxPrice = maxVal;
+                //if (!isFirstLoad) {
+
+                updateSelectedConditions();
+                setTimeout(sendDataToServer(), 2000);
+                    
+               
+            });
+        });
+    }
+
+    function getvalueinchoose() {
+        var aElements = document.querySelectorAll('.itemfl');
+     //   var parentDiv = document.getElementById('main-chhis');
+        
+        
+        aElements.forEach(function (a) {
+            var liElement = a.parentElement;
+
+            a.addEventListener('click', function () {
+                var size = liElement.id + "-" + a.innerText;
+                
+                
+                    
+                    selectedConditions.sizes = size;
+                    
+                updateSelectedConditions();
+                setTimeout(sendDataToServer(),2000)
+                    
+            });
+        });
+    }
+    
+    function sendDataToServer() {
+            $.ajax({
+                url: '/product/FilterProducts',
+                type: 'POST',
+                data: JSON.stringify(selectedConditions),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $(".main-product").html();
+                    $(".main-product").html(data);
+                    
+                }
+            });
+    }
+    function deletetab(card) {
+        if (card.className == "h_price") {
+            selectedConditions.minPrice = 0;
+            selectedConditions.maxPrice = 0;
+            card.remove();
+
+        }
+        if (card.className == "h_size") {
+            selectedConditions.sizes = "";
+            card.remove();
+        }
+        setTimeout(() => {
+            sendDataToServer()
+        },2000)
+    }
+    function detailproduc(cardmain) {
+
+        var htmlch = cardmain.children[0];
+        var idsp = htmlch.getAttribute('id');
+        window.location.href = `/product/Detailproduct?idsp=${idsp}`;
+    }
+    valumnofprice();
+    getvalueinchoose();
+    
+</script>

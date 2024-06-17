@@ -1,0 +1,122 @@
+﻿@model Website_clothe.Models.Nguoidung
+
+<style>
+    .error{
+        color: red;
+
+    }
+</style>
+<div class="p-2 m-3">
+    <h2>Thông tin cá nhân</h2>
+
+    @using (Html.BeginForm("Updatemyinfo", "Access", FormMethod.Post, new { @id = "my_info" }))
+    {
+
+
+        @Html.AntiForgeryToken()
+        <div class="form-group my-3">
+            <div class="col-12">
+                <label class="form-label">Họ và tên</label>
+                @Html.TextBoxFor(m => m.Tennguoidung, new { @class = "w-100  form-control", @name = "Tennguoidung", required = "required" })
+                <span></span>
+            </div>
+        </div>
+        <div class="form-group my-3">
+            <div class="col-12">
+                <label class="form-label">Ngày sinh</label>
+
+                @Html.TextBox("Ngaysinh", String.Format("{0:yyyy-MM-dd}", Model.Ngaysinh), new { @type = "date", @class = "w-100  form-control", @name = "Ngaysinh", required = "required" })
+
+            </div>
+        </div>
+        <div class="form-group my-3">
+            <div class="col-12">
+                <label class="form-label">Địa chỉ</label>
+                @Html.TextBoxFor(m => m.Diachi, new { @class = "w-100  form-control", @name = "Diachi", required = "required" })
+            </div>
+        </div>
+        <div class="form-group my-3">
+            <div class="col-12">
+                <label class="form-label">Số điện thoại</label>
+                @Html.TextBoxFor(m => m.SoDT, new { @class = "w-100  form-control", @name = "SoDT", required = "required" })
+            </div>
+        </div>
+        <div class="form-group my-3">
+            <div class="col-12">
+                <label class="form-label">Email</label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "w-100  form-control", @name = "Email", required = "required" })
+            </div>
+        </div>
+        <div class="form-group my-3">
+            <div class="col-12">
+                <label class="form-label">Username</label>
+                @Html.TextBoxFor(m => m.Username, new { @class = "w-100  form-control", @name = "Username", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" onclick="submitForm(event)" class="btn btn-block btn-success">Cập nhật thông tin</button>
+        </div>
+    }
+</div>
+
+
+
+<script>
+    function submitForm(event) {
+        event.preventDefault();
+        if ($('#my_info').valid()) {
+            $.ajax({
+                url: '/Access/Updatemyinfo',
+                type: 'POST',
+                data: $('#my_info').serialize(),
+                success: function (result) {
+                    if (result.Success) {
+                        alert('Cập nhật thông tin thành công !!')
+                    }
+                    else {
+                        alert('lỗi không thể cập nhật thông tin vui lòng cập nhật sau')
+                    }
+                },
+            });
+        }
+    }
+    $(document).ready(function () {
+        $('input[type="date"]').each(function () {
+            var currentDate = $(this).val();
+            if (currentDate) {
+                var formattedDate = new Date(currentDate).toISOString().split('T')[0];
+                $(this).val(formattedDate);
+            }
+        });
+        $('#my_info').validate({
+            rules: {
+                'Tennguoidung': {
+                    required: true
+                },
+                'Diachi': {
+                    required: true
+                },
+                'Ngaysinh': {
+                    required: true
+                },
+                'SoDT': {
+                    required: true
+                },
+                'Email': {
+                    required: true
+                },
+                'Username': {
+                    required: true
+                }
+            },
+            messages: {
+                'Tennguoidung': 'Bạn chưa nhập tên người dùng',
+                'Diachi': 'Bạn chưa nhập địa chỉ',
+                'Ngaysinh': 'Bạn chưa chọn ngày sinh',
+                'SoDT': 'Bạn chưa nhập số điện thoại',
+                'Email': 'Bạn chưa nhập email',
+                'Username': 'Bạn chưa nhập username'
+            }
+        })
+    });
+</script>

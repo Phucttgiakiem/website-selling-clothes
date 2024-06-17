@@ -1,0 +1,69 @@
+﻿@model Website_clothe.Models.Chitietdanhmuc
+@{
+    var result = ViewBag.danhmucsp;
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Edit</h2>
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Chỉnh sửa danh mục</h4>
+            <button class="btn btn-info " onclick="location.href= ' @Url.Action("Index", "DetailCatagory") ' ">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Category" asp-action="Edit" method="post" enctype="multipart/form-data">
+                <p style="color:red">
+                    @ViewBag.error
+                </p>
+                <div class="mb-3">
+                    <label class="form-label">Tên danh mục</label>
+                    <input type="text" class="form-control" placeholder="Nhập tên danh mục" value="@Model.Tenchitietdanhmuc" name="tenctdanhmuc" required/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên danh mục</label>
+                    <select name="danhmucsp" class="form-select" required>
+                        <option value="">Chọn danh mục sản phẩm</option>
+                        @foreach (var item in result)
+                        {
+                            if (item.Madanhmuc == Model.Madanhmuc)
+                            {
+                                <option value="@item.Madanhmuc" selected>@item.Tendanhmuc</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Madanhmuc">@item.Tendanhmuc</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Hình ảnh</label>
+                    <input type="file" class="form-control" name="image" onchange="previewImage(this);">
+                </div>
+                <div class="mb-3">
+                    <img id="imagePreview" class="d-block img-thumbnail" src="~/Content/img/@Model.HinhAnh"  alt="" style=" background-color: rgb(235, 235, 235);color: white;width:200px;height:200px" >
+                </div>
+                <input type="hidden" value="@Model.ID_Chitietdanhmuc" name="mactdm"/>
+                <input type="submit" class="btn btn-success" value="Submit" />
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function previewImage(input) {
+        var imagePreview = document.getElementById("imagePreview");
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            imagePreview.src = "path-to-empty-image.jpg";
+        }
+    }
+</script>
+

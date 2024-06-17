@@ -1,0 +1,34 @@
+﻿@model Website_clothe.Models.Danhmucsanpham
+@{
+    ViewBag.Title = "Edit-category";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid mt-4 px-4">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Chỉnh sửa danh muc</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Category")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Category" asp-action="Edit" method="post" enctype="multipart/form-data">
+                <p style="color:red">
+                    @ViewBag.error
+                </p>
+                <div class="mb-3">
+                    <label class="form-label">Tên danh mục</label>
+                    <input type="text" class="form-control" placeholder="Nhập tên danh mục" value="@Model.Tendanhmuc" name="tendanhmuc" required/>
+                </div>
+                <input type="hidden" value="@Model.Madanhmuc" name="id" />
+                
+                <input type="submit" class="btn btn-success" value="Submit" />
+                
+            </form>
+        </div>
+    </div>
+</div>
+

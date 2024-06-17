@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Website_clothe.Models.Bienthesanpham>
+@{ 
+    var result = ViewBag.Sanpham;
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>Danh sách biến thể sản phẩm</h3>
+            <button class="btn btn-primary " onclick="location.href= ' @Url.Action("Create", "Variantproduct") ' ">
+                <div class="text-white">Thêm mới</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm biến thể</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng tồn</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID_Bienthesanpham</td>
+                            @foreach(var item2 in result)
+                             {
+                                if(item.ID_Sanpham == item2.Masanpham)
+                                {
+                                    <td>@item2.Tensanpham</td>
+                                    break;
+                                }
+                             }
+                            <td>@item.Soluongton cái</td>
+                            <td>
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.ID_Bienthesanpham }, new { @class = "btn btn-warning" })
+
+                                <a class="btn btn-danger" href="@Url.Action("Delete", "Variantproduct", new { id = item.ID_Bienthesanpham })">Xóa</a>
+                                <a class="btn btn-info" href="@Url.Action("Detail", "Variantproduct", new { id = item.ID_Bienthesanpham })">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

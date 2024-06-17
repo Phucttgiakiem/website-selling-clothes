@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Website_clothe.Models.Donmuahang>
+@{
+    int i = 0;
+}
+@if (Model != null && Model.Any())
+{
+        <table class="table table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th>STT</th>
+                    <th>Ngày mua</th>
+                    <th>Tổng tiền</th>
+                    <th>Tác vụ</th>
+                </tr>
+            </thead>
+            <tbody >
+                @foreach (var item in Model)
+                {
+                    i += 1;
+                    <tr class="text-center">
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @item.Ngaytao
+                        </td>
+                        <td>
+                            @item.Tongdonhang đ
+                        </td>
+                        <td>
+                            <i class="fas fa-search btndetailbill" id="@item.ID_Donhang"></i>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+}
+else
+{
+    <p>Không có đơn hàng</p>
+}

@@ -1,0 +1,42 @@
+﻿@model List<Website_clothe.Models.TrangThaiDH>
+
+@{
+    ViewBag.Title = "Quản lý trạng thái đơn hàng";
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>Danh sách trạng thái</h3>
+            <button class="btn btn-primary " onclick="location.href= ' @Url.Action("Create", "Condition") ' ">
+                <div class="text-white">Thêm mới</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID_TrangThai</td>
+                          
+                            <td>@item.TenTrangThai</td>
+                            <td>
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.ID_TrangThai }, new { @class = "btn btn-warning" })
+
+                                <a class="btn btn-danger" href="@Url.Action("Delete", "Condition", new { id = item.ID_TrangThai })">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

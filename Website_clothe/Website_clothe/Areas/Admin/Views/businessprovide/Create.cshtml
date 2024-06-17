@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Add-business-provider";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Thêm nhà cung cấp mới</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "businessprovide")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <form asp-controller="businessprovide" asp-action="Create" method="post">
+                <p style="color:red">
+                    @ViewBag.error
+                </p>
+                <div class="mb-3">
+                    <label class="form-label">Tên nhà cung cấp</label>
+                    <input type="text" class="form-control" value="" name="namebusiness" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Địa chỉ</label>
+                    <input type="text" class="form-control" value="" name="area" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Số điện thoại</label>
+                    <input type="text" class="form-control" value="" name="numberphone" required />
+                </div>
+                <input type="submit" class="btn btn-success" value="Submit" />
+            </form>
+        </div>
+    </div>
+</div>
+

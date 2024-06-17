@@ -1,0 +1,76 @@
+﻿
+@model Website_clothe.Models.register_user
+
+<style>
+    .btnregister:hover {
+        background-color: rgb(44, 216, 255)
+    }
+    .btnregister:active{
+        background-color:rgb(239, 255, 98)
+    }
+    .btnregister {
+        width: 130px;
+        height: 45px;
+        background-color: rgb(33, 130, 210);
+        color:white;
+        cursor: pointer;
+        font-family: Arial;
+        font-weight:bold;
+        font-size: 20px;
+        border: none;
+        outline: none
+    }
+</style>
+<div class="container-fluid d-flex justify-content-center" style="margin-top:160px">
+    <div class="d-flex flex-column justify-content-center align-items-center" style="width:700px">
+        <div class="d-flex flex-column justify-content-start w-100">
+            <h2>Đăng ký</h2>
+            <hr class="w-100" />
+        </div>
+
+        @using (Html.BeginForm("Register", "Access", FormMethod.Post, new
+        {
+            @class = "row w-100 "
+        }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group my-3">
+                <div class="col-12">
+                    @Html.TextBoxFor(m => m.Tennguoidung, new { @class = "w-100  form-control", placeholder = "Họ và tên" })
+                    @Html.ValidationMessageFor(m => m.Tennguoidung, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <div class="col-12">
+                    @Html.TextBoxFor(m => m.username, new { @class = "w-100  form-control", placeholder = "Tên đăng nhập" })
+                    @Html.ValidationMessageFor(m => m.username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <div class="col-12">
+                    @Html.PasswordFor(m => m.Password, new { @class = "w-100  form-control", placeholder = "Mật khẩu" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <div class="col-12">
+                    @Html.TextBoxFor(m => m.Sodt, new { @class = "w-100  form-control", placeholder = "Số điện thoại" })
+                    @Html.ValidationMessageFor(m => m.Sodt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <div class="col-12">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "w-100  form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <div class="col-12">
+                    <input class="btnregister" type="submit" value="Đăng ký" />
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

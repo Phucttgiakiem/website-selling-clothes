@@ -1,0 +1,40 @@
+﻿@model Website_clothe.Models.Nhacungcap
+@{
+    ViewBag.Title = "Edit-businessprovide";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Edit</h2>
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Chỉnh sửa nhà cung cấp</h4>
+            <button class="btn btn-info " onclick="location.href= ' @Url.Action("Index", "businessprovide") ' ">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <form asp-controller="businessprovide" asp-action="Edit" method="post">
+                <p style="color:red">
+                    @ViewBag.error
+                </p>
+                <div class="mb-3">
+                    <label class="form-label">Tên nhà cung cấp</label>
+                    <input type="text" class="form-control" value="@Model.Tennhacungcap" name="tennhacungcap" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Địa chỉ</label>
+                    <input type="text" class="form-control" value="@Model.Diachi" name="area" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Số điện thoại</label>
+                    <input type="text" class="form-control"  value="@Model.SoDT" name="numberphone" required />
+                </div>
+                <input type="hidden" value="@Model.Manhacungcap" name="id_business" />
+                <input type="submit" class="btn btn-success" value="Submit" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

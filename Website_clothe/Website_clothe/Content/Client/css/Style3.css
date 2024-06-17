@@ -1,0 +1,82 @@
+﻿/*  phần trang login register  */
+/*.main-account {
+    width: 350px;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 5px 10px 40px #000;
+}
+
+#chk {
+    display: none;
+}
+
+.signup {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.signup > form > label, .login > form > label {
+    color: #000;
+    font-size: 2.3em;
+    justify-content: center;
+    display: flex;
+    margin: 60px 60px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .5s ease-in-out;
+}
+.signup>form>input , .login>form>input{
+    width:60%;
+    height:40px;
+    justify-content:center;
+    display:flex;
+    margin:20px auto;
+    padding:10px;
+    outline:none;
+    border-radius:5px;
+}
+.signup > form>button,.login > form>button{
+    width:60%;
+    height:40px;
+    margin:10px auto;
+    justify-content:center;
+    display:block;
+    color:#fff;
+    background:rgb(62, 172, 247);
+    font-size:1em;
+    font-weight:bold;
+    
+    outline:none;
+    border:none;
+    border-radius:5px;
+    transition:.2s ease-in;
+    cursor:pointer;
+}
+.signup > form > button:hover,.login >form>button:hover{
+    background:rgb(31, 112, 222);
+}
+.login{
+    height:460px;
+    background:#eee;
+    border-radius:60% / 10%;
+    transform:translateY(-180px);
+    transition:.8s ease-in-out;
+}
+.login > form > label {
+    color: rgb(62, 172, 247);
+    transform: scale(.6);
+}
+#chk:checked ~ .login{
+   
+    transform: translateY(-500px);
+}
+#chk:checked ~ .login label {
+        
+    transform: scale(1);
+}
+#chk:checked ~ .signup label{
+    transform: scale(.6);
+}*/
+

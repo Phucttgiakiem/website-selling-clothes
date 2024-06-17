@@ -1,0 +1,108 @@
+﻿@model Website_clothe.Models.User_and_account
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutlogin.cshtml";
+}
+<style>
+    .underlayout_login {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 500px;
+        height: max-content;
+        margin: 150px auto;
+        background-color: rgb(255, 255, 255);
+        border-radius: 20px;
+        box-shadow: -1.3px -1.2px 80px 10px;
+        padding: 20px
+    }
+
+    .header_login {
+        display: flex;
+        justify-content: center
+    }
+
+    .body_login {
+        display: flex;
+        justify-content: center;
+        align-items: center
+    }
+
+    .checkbox {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .configcheck {
+        width: 20px;
+        height: 20px;
+        margin: auto 0;
+    }
+</style>
+<div class="underlayout_login">
+    <div class="header_login">
+        <h3 class="fs-2">Admin login</h3>
+    </div>
+    <div class="body_login">
+        @using (Html.BeginForm("Login", "AdminUser", FormMethod.Post, new { @class = "w-100 container" }))
+        {
+            <div class="row justify-content-center">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="col-12">
+                    <div class="form-group my-3">
+                        @Html.TextBoxFor(m => m.username, new { @class = "w-100  form-control", placeholder = "Tên đăng nhập" })
+                        @Html.ValidationMessageFor(m => m.username, "", new { @class = "text-danger" })
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group my-3">
+                        @Html.PasswordFor(m => m.password, new { @class = "w-100  form-control", placeholder = "Mật khẩu" })
+                        @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-12 justify-content-start">
+                    <div class="form-group mt-4 container">
+
+                        <div class="row">
+                            <div class=" col-6 px-0">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.Remember, new { @class = "configcheck" })
+                                    <p style="display:inline-block;width:max-content;margin-left:10px;margin-bottom:0;font-weight:bold">Ghi nhớ đăng nhập</p>
+                                </div>
+
+                            </div>
+                            <div class="col-6 pe-0  d-flex justify-content-end">
+                                <a href="/Admin/AdminUser/ForgotPass" style="text-decoration:none;color:rgb(30, 179, 231);font-weight:400">Quên mật khẩu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group mt-4">
+
+                        <input type="submit" value="Login" style="width: 100%; height: 40px; font-weight: bold; font-family: Arial; border: none;border-radius:8px; outline: none;color:white;background-color:rgb(33, 145, 248);cursor:pointer" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Kiểm tra xem cookie có tồn tại không
+        var usernameCookie = $.cookie("AdminUsername");
+        var passwordCookie = $.cookie("Adminpassword");
+
+        if (usernameCookie && passwordCookie) {
+            // Gán giá trị cookie vào trường input
+            $('input[name="username"]').val(usernameCookie);
+            $('input[name="password"]').val(passwordCookie);
+        }
+    });
+
+</script>

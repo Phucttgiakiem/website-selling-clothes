@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Website_clothe.Models.ShoppingcardItem>
+
+<style>
+    .table-empty::before {
+        content: "";
+        position: absolute;
+        top: 100px;
+        left: 500px;
+        right: 0;
+        bottom: 0;
+        background-image: url("/Content/img/pngaaa.com-5034314.png");
+        background-repeat: no-repeat, repeat;
+        z-index: -1; /* Để ảnh nền nằm sau */
+    }
+    .table-empty {
+        position: relative;
+    }   
+</style>
+
+<table class="table config_bg">
+    <thead>
+        <tr class="text-center">
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Size</th>
+            <th>Màu</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            int i = 0;
+            float tongtien = 0;
+            foreach (var item in Model)
+            {
+                tongtien += item.totalprice;
+                <tr class="text-center">
+                    <td>
+                        @(i+1)
+                    </td>
+                    <td>
+                        <a href="/product/Detailproduct?idsp=@item.productid" style="text-decoration:none;color:black">@item.productname</a>
+                    </td>
+                    <td>
+                        @item.size
+                    </td>
+                    <td class="d-flex justify-content-center">
+                        <div style="width:70px;height:40px;border-radius:30px;border:3px solid rgb(6, 6, 6);padding:3px;">
+                            <div style="width:60px;height:30px; border-radius:20px;background-color:@item.color"></div>
+                        </div>
+                    </td>
+                    <td>
+                        @String.Format("{0:#,##0}", item.price) đ
+                    </td>
+                    <td>
+                        <input type="number" id="Quantity_@item.productid-@item.variantproductid" class="form-control" value="@item.soluong" min="1"/>
+                    </td>
+                    <td>
+                        @String.Format("{0:#,##0}",item.totalprice) đ
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-danger btnDeleteCard" data-id="@item.productid-@item.variantproductid">Xóa</a>
+                        <a href="#" class="btn btn-sm btn-success btnUpdateCard" data-id="@item.productid-@item.variantproductid">Cập nhật</a>
+                    </td>
+                </tr>
+                i++;
+            }
+            <tr>
+                <th colspan="6" style="text-align:right">Tổng: </th>
+                <th class="text-center text-danger">@String.Format("{0:#,##0}",tongtien) đ</th>
+                <th></th>
+            </tr>
+        }
+        
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        var table = $('.config_bg');
+        if (table.find('tbody tr').length === 0) {
+            table.addClass('table-empty');
+            table.css({
+                "height": "500px",
+            })
+        }
+    });
+</script>

@@ -1,0 +1,67 @@
+﻿@model Website_clothe.Models.Nguoidung
+@{
+   
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Chi tiết người dùng</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Manageruser")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Mã người dùng:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.ID_Nguoidung</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Tên người dùng:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.Tennguoidung</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Ngày sinh:</span></div>
+                @if (Model.Ngaysinh != null)
+                {
+                    <div class="col-9"><span style="font-family:Arial">@Model.Ngaysinh.Value.ToString("dd/MM/yyyy")</span></div>
+                }
+                else
+                {
+                    <div class="col-9"><span style="font-family:Arial">Chưa cập nhật thông tin</span></div>
+                }
+            </div>
+            
+
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Địa chỉ:</span></div>
+                @if (Model.Diachi != null)
+                {
+                    <div class="col-9"><span style="font-family:Arial">@Model.Diachi</span></div>
+                }
+            else
+            {
+                 <div class="col-9"><span style="font-family:Arial">Chưa cập nhật thông tin</span></div>
+            }
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Số điện thoại:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.SoDT</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Email:</span></div>
+                @if (Model.Email != null)
+                {
+                    <div class="col-9"><span style="font-family:Arial">@Model.Email</span></div>
+                }
+                else
+                {
+                    <div class="col-9"><span style="font-family:Arial">Chưa cập nhật thông tin</span></div>
+                }
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Username:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.Username</span></div>
+            </div>
+        </div>
+    </div>
+</div>

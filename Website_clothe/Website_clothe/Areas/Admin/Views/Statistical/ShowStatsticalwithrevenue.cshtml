@@ -1,0 +1,115 @@
+﻿@{ 
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+
+}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<div class="container-fluid my-2">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3>Thống kê doanh thu</h3>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex flex-row justify-content-around">
+                        <div>
+                            <p class="fs-5">Chọn tháng thống kê:</p>
+                        </div>
+                        <div>
+                            <select id="choosemonth" class="form-select" style="width:130px">
+                                @{ 
+
+                                    for (int i = 1; i < 13; i++)
+                                    {
+                                        <option value="@i">Tháng @i</option>
+                                    }
+                                }
+                                
+                            </select>
+                        </div>
+                        <div>
+                            <p class="fs-5">Chọn năm thống kê:</p>
+                        </div>
+                        <div>
+                            <select id="chooseyear" class="form-select" style="width:130px">
+                                @for (int year = 2000; year <= DateTime.Now.Year; year++)
+                                {
+                                    <option value="@year">@year</option>
+                                }
+                            </select>
+                            
+                        </div>
+                        <div>
+                            <input id="ID" class="btn btn-success" value="Show Graph" type="button" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    
+                        <canvas id="mystatstic" style="max-width:100%;max-height:430px;margin-top:50px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    
+    $(function () {
+        var myChart; // Khai báo biến myChart ở ngoài để sử dụng trong phạm vi toàn cục
+
+        $('#ID').click(function () {
+            var month = $('#choosemonth').val();
+            var year = $('#chooseyear').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Statistical/GetSalesDataForMonthAndYear",
+                data: {
+                    year: year,
+                    month: month
+                },
+                contextType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccessResult,
+                error: OnError
+            });
+
+            function OnSuccessResult(data) {
+                var _data = data;
+                var _chartLabels = _data.map(x => x.Day);
+                var _chartData = _data.map(x => x.TotalRevenue);
+
+                if (myChart) {
+                    myChart.destroy(); // Xóa biểu đồ hiện tại nếu đã tồn tại
+                }
+
+                var ctx = document.getElementById('mystatstic').getContext('2d');
+                myChart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: _chartLabels,
+                        datasets: [{
+                            label: "Số tiền tổng trên số đơn hàng",
+                            backgroundColor: "blue",
+                            data: _chartData
+                        }]
+                    }
+                });
+            }
+
+            function OnError(err) {
+
+            }
+        })
+    })
+</script>

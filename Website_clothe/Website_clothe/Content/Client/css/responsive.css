@@ -1,0 +1,238 @@
+﻿
+/* ------ phần menu left ------- */
+.container-filler {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+
+.itemfl {
+    text-align: center;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 100%;
+    color: rgb(34, 34, 34);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.sidebar_type_and_size ul li {
+    list-style-type: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border:1px solid rgb(223, 223, 223);
+    margin-bottom: 10px;
+}
+
+    
+
+.order_sidebar{
+    /*display:flex;
+    flex-direction:column;*/
+    
+}
+.trademark1234{
+    margin-bottom:1rem;
+}
+.trademark1234 p {
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Arial;
+}
+.trademark1234 a{
+    text-decoration:none;
+    color:rgb(15, 10, 10);
+    font-size:15px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+.main-product {
+    display: grid;
+    padding: 0 40px;
+    grid-template-columns: repeat(3,1fr);
+}
+.card-item{
+    display:flex;
+    flex-direction:column;
+    /*justify-content:center;*/
+    /*align-items:center;*/
+    width:min-content;
+}
+.card-img-item {
+    display:flex;
+    width: 250px;
+    height: 360px;
+    position: relative;
+}
+.card-item:hover .card-btn-item {
+    display: block;
+}
+.card-btn-item{
+    position:absolute;
+    bottom:4px;
+    left:4px;
+    width:242px;
+    padding:5px;
+    border:0;
+    background-color:rgb(249, 249, 249);
+    display:none;
+}
+.card-img-item img {
+    width:100%;
+    height:100%;
+}
+.card-img-item img:hover{
+    opacity:0.7;
+}
+.card-main {
+    width: min-content;
+    overflow: hidden;
+}
+.card-main p:first-child {
+    color: rgb(119, 119, 119);
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Số dòng tối đa trước khi cắt */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card-main p:last-child{
+    color:rgb(15, 10, 10);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight:900;
+    font-size:20px;
+}
+/*  phần price range  */
+
+.wrapper{
+    display:flex;
+    flex-direction:column;
+}
+.title-price {
+    float: left;
+}
+.title-price p{
+    font-size:15px;
+    font-weight:bold;
+    font-family:Arial;
+}
+.price-in .field{
+    height:45px;
+    width:50%;
+    display:flex;
+    align-items:center;
+
+}
+.price-in .field:nth-child(1){
+    float:left;
+}
+.price-in .field:nth-child(2){
+    float:right;
+}
+.field input {
+    width:100%;
+    height:82%;
+    outline: none;
+    border:0;
+    
+    padding: 10px;
+}
+.field input[type="number"]::-webkit-inner-spin-button,
+.field input[type="number"]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
+.slider_x{
+    height: 5px;
+    border-radius: 5px;
+    background:gray;
+    position:relative;
+    top: 15px;
+}
+.slider_x .pro{
+    height: 5px;
+    left:0%;
+    right:0%;
+    position: absolute;
+    border-radius: 5px;
+    background: rgb(31, 189, 199);
+}
+.range-in{
+    position: relative;
+}
+.range-in input{
+    position: absolute;
+    top:10px;
+    height: 5px;
+    width:100%;
+    background:none;
+    pointer-events:none;
+    -webkit-appearance:none;
+}
+.range-in input[type="range"]::-webkit-slider-thumb {
+    height: 17px;
+    width: 17px;
+    border-radius: 50px;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    background: rgb(31, 189, 199);
+    border:none;
+}
+/*  phần history đã chọn  */
+
+.choosehistory{
+    width:100%;
+}
+.choosehistory p {
+    font-size:15px;
+    font-weight:bold;
+    font-family:Arial, Helvetica, sans-serif;
+}
+.h_price{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-evenly;
+    width:calc(150px + 20px);
+    height:40px;
+    border: 1px solid black;
+    border-radius:20px;
+    background-color: rgb(188, 188, 188);
+    margin:5px 0;
+}
+.h_size {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: calc(80px + 15px);
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: rgb(188, 188, 188);
+    margin:5px 0;
+}
+.text_h-price{
+    width:max-content;
+    height:100%;
+    border-radius: 20px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    margin-bottom: 0;
+    
+}
+#main-chhis {
+    display:flex;
+    flex-direction:column;
+    justify-content:left;
+    flex-wrap:wrap;
+}

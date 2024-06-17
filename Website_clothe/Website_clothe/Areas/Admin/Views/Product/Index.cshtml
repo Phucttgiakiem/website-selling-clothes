@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Website_clothe.Models.Sanpham>
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>Danh sách sản phẩm</h3>
+            <button class="btn btn-primary " onclick="location.href= ' @Url.Action("Create", "Product") ' ">
+                <div class="text-white">Thêm mới</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Ngày tạo</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Masanpham</td>
+                            <td><p class="workingimg" style="cursor:pointer">@item.Tensanpham</p></td>
+                            <td>@item.Ngaytao.Value.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.Masanpham }, new { @class = "btn btn-warning" })
+
+                                <a class="btn btn-danger" href="@Url.Action("Delete", "Product", new { id = item.Masanpham })">Xóa</a>
+                                <a class="btn btn-info" href="@Url.Action("Detail", "Product", new { id = item.Masanpham })">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="dialog">
+    <iframe id="myframe" style="border: 0;width: 100%;height:100%;"></iframe>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#dialog').dialog({
+            autoOpen: false,
+            show: "fade",
+            hide: "fade",
+            modal: true,
+            height: '600',
+            width: '700',
+            resizable: true,
+            title: 'Quản lý ảnh sản phẩm',
+            close: function () {
+                window.location.reload();
+            }
+        });
+        $('body').on('click', ".workingimg", function () {
+            var prid = $(this).parent().prev('td').text()
+            $("#dialog #myframe").attr("src", "/Admin/ProductImage/Index?id=" + prid);
+            $('#dialog').dialog('open');
+            return false;
+        })
+    })
+</script>

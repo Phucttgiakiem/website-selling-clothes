@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Website_clothe.Models.Nguoidung>
+@{
+    ViewBag.Title = "Quản lý người dùng";
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>Danh sách người dùng</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Mã người dùng</th>
+                        <th>Tên người dùng</th>
+                        <th>Số điện thoại</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID_Nguoidung</td>
+                            <td>@item.Tennguoidung</td>
+                            <td>@item.SoDT</td>
+                            <td>
+
+                                <a class="btn btn-info" href="@Url.Action("Detail", "Manageruser", new { id = item.ID_Nguoidung })">Chi tiết</a>
+                                @if (item.Quyentruycap == 1)
+                                {
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID_Nguoidung }, new { @class = "btn btn-warning" })
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

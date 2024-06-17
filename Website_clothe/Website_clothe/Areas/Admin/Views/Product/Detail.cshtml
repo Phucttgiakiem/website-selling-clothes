@@ -1,0 +1,71 @@
+﻿@model Website_clothe.Models.Sanpham
+@{ 
+    var result = ViewBag.Hinhsp;
+    var thuonghieu = ViewBag.Thuonghieu;
+    var danhmuc = ViewBag.Danhmuc;
+    var nhacungcap = ViewBag.Nhacungcap;
+    var loai = ViewBag.Loai;
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Chi tiết sản phẩm</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Product")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Mã sản phẩm:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.Masanpham</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Tên sản phẩm:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.Tensanpham</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Ngày tạo:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.Ngaytao.Value.ToString("dd/MM/yyyy")</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Ngày cập nhật:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.Ngaycapnhat.Value.ToString("dd/MM/yyyy")</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Danh mục sản phẩm:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@danhmuc</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Thương hiệu:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@thuonghieu</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Nhà cung cấp:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@nhacungcap</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Loại sản phẩm:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@loai</span></div>
+            </div>
+            <div class="mx-2 my-2 row">
+                <div class="col-3"><span class="fs-5" style="font-family:Arial">Mô tả:</span></div>
+                <div class="col-9"><span style="font-family:Arial">@Model.Mota</span></div>
+            </div>
+            <div class="mx-2 my-4 ">
+                <div class="col-12">
+                    <div class="row mx-1">
+                        <span class="fs-5 py-4" style="font-family:Arial">Hình ảnh sản phẩm</span>
+                    </div>
+                    <div class="row justify-content-start">
+                        @foreach (var item in result)
+                        {
+                            <div class="col-4 d-flex justify-content-center">
+                                <img src="~/Content/img/@item" class="img-thumbnail" width="200" height="200" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

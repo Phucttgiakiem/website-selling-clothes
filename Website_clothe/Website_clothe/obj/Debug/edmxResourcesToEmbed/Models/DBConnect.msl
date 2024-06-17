@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Server_clothesModelStoreContainer" CdmEntityContainer="Server_clothesEntities1">
+    <EntitySetMapping Name="Bienthesanphams">
+      <EntityTypeMapping TypeName="Server_clothesModel.Bienthesanpham">
+        <MappingFragment StoreEntitySet="Bienthesanpham">
+          <ScalarProperty Name="ID_Bienthesanpham" ColumnName="ID_Bienthesanpham" />
+          <ScalarProperty Name="ID_Sanpham" ColumnName="ID_Sanpham" />
+          <ScalarProperty Name="ID_Mau" ColumnName="ID_Mau" />
+          <ScalarProperty Name="Soluongton" ColumnName="Soluongton" />
+          <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chitietdanhmucs">
+      <EntityTypeMapping TypeName="Server_clothesModel.Chitietdanhmuc">
+        <MappingFragment StoreEntitySet="Chitietdanhmuc">
+          <ScalarProperty Name="ID_Chitietdanhmuc" ColumnName="ID_Chitietdanhmuc" />
+          <ScalarProperty Name="Madanhmuc" ColumnName="Madanhmuc" />
+          <ScalarProperty Name="Tenchitietdanhmuc" ColumnName="Tenchitietdanhmuc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chitietdonhangs">
+      <EntityTypeMapping TypeName="Server_clothesModel.Chitietdonhang">
+        <MappingFragment StoreEntitySet="Chitietdonhang">
+          <ScalarProperty Name="ID_Chitietdonhang" ColumnName="ID_Chitietdonhang" />
+          <ScalarProperty Name="ID_Donhang" ColumnName="ID_Donhang" />
+          <ScalarProperty Name="ID_Sanphambienthe" ColumnName="ID_Sanphambienthe" />
+          <ScalarProperty Name="Soluong" ColumnName="Soluong" />
+          <ScalarProperty Name="Thanhtien" ColumnName="Thanhtien" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chitietphieunhaps">
+      <EntityTypeMapping TypeName="Server_clothesModel.Chitietphieunhap">
+        <MappingFragment StoreEntitySet="Chitietphieunhap">
+          <ScalarProperty Name="ID_Chitietphieunhap" ColumnName="ID_Chitietphieunhap" />
+          <ScalarProperty Name="ID_Bienthesanpham" ColumnName="ID_Bienthesanpham" />
+          <ScalarProperty Name="Soluongnhap" ColumnName="Soluongnhap" />
+          <ScalarProperty Name="Thanhtiennhap" ColumnName="Thanhtiennhap" />
+          <ScalarProperty Name="ID_Phieunhaphang" ColumnName="ID_Phieunhaphang" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Danhmucsanphams">
+      <EntityTypeMapping TypeName="Server_clothesModel.Danhmucsanpham">
+        <MappingFragment StoreEntitySet="Danhmucsanpham">
+          <ScalarProperty Name="Madanhmuc" ColumnName="Madanhmuc" />
+          <ScalarProperty Name="Tendanhmuc" ColumnName="Tendanhmuc" />
+          <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Donmuahangs">
+      <EntityTypeMapping TypeName="Server_clothesModel.Donmuahang">
+        <MappingFragment StoreEntitySet="Donmuahang">
+          <ScalarProperty Name="ID_Donhang" ColumnName="ID_Donhang" />
+          <ScalarProperty Name="ID_Nguoidung" ColumnName="ID_Nguoidung" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="Tennguoidung" ColumnName="Tennguoidung" />
+          <ScalarProperty Name="Ngaytao" ColumnName="Ngaytao" />
+          <ScalarProperty Name="Tranthai" ColumnName="Tranthai" />
+          <ScalarProperty Name="Tongdonhang" ColumnName="Tongdonhang" />
+          <ScalarProperty Name="ID_Magiam" ColumnName="ID_Magiam" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HinhanhSanphams">
+      <EntityTypeMapping TypeName="Server_clothesModel.HinhanhSanpham">
+        <MappingFragment StoreEntitySet="HinhanhSanpham">
+          <ScalarProperty Name="ID_Image" ColumnName="ID_Image" />
+          <ScalarProperty Name="TenAnh" ColumnName="TenAnh" />
+          <ScalarProperty Name="Masanpham" ColumnName="Masanpham" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Loais">
+      <EntityTypeMapping TypeName="Server_clothesModel.Loai">
+        <MappingFragment StoreEntitySet="Loai">
+          <ScalarProperty Name="ID_Loai" ColumnName="ID_Loai" />
+          <ScalarProperty Name="Tenloai" ColumnName="Tenloai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Magiamgias">
+      <EntityTypeMapping TypeName="Server_clothesModel.Magiamgia">
+        <MappingFragment StoreEntitySet="Magiamgia">
+          <ScalarProperty Name="ID_Magiam" ColumnName="ID_Magiam" />
+          <ScalarProperty Name="Phantramgiam" ColumnName="Phantramgiam" />
+          <ScalarProperty Name="Thoigianbatdau" ColumnName="Thoigianbatdau" />
+          <ScalarProperty Name="Thoigianketthuc" ColumnName="Thoigianketthuc" />
+          <ScalarProperty Name="Mota" ColumnName="Mota" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MauSacs">
+      <EntityTypeMapping TypeName="Server_clothesModel.MauSac">
+        <MappingFragment StoreEntitySet="MauSac">
+          <ScalarProperty Name="ID_Mau" ColumnName="ID_Mau" />
+          <ScalarProperty Name="Tenmau" ColumnName="Tenmau" />
+          <ScalarProperty Name="ID_Loai" ColumnName="ID_Loai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Nguoidungs">
+      <EntityTypeMapping TypeName="Server_clothesModel.Nguoidung">
+        <MappingFragment StoreEntitySet="Nguoidung">
+          <ScalarProperty Name="ID_Nguoidung" ColumnName="ID_Nguoidung" />
+          <ScalarProperty Name="Tennguoidung" ColumnName="Tennguoidung" />
+          <ScalarProperty Name="Ngaysinh" ColumnName="Ngaysinh" />
+          <ScalarProperty Name="Diachi" ColumnName="Diachi" />
+          <ScalarProperty Name="SoDT" ColumnName="SoDT" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Quyentruycap" ColumnName="Quyentruycap" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Nhacungcaps">
+      <EntityTypeMapping TypeName="Server_clothesModel.Nhacungcap">
+        <MappingFragment StoreEntitySet="Nhacungcap">
+          <ScalarProperty Name="Manhacungcap" ColumnName="Manhacungcap" />
+          <ScalarProperty Name="Tennhacungcap" ColumnName="Tennhacungcap" />
+          <ScalarProperty Name="Diachi" ColumnName="Diachi" />
+          <ScalarProperty Name="SoDT" ColumnName="SoDT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Phieunhaps">
+      <EntityTypeMapping TypeName="Server_clothesModel.Phieunhap">
+        <MappingFragment StoreEntitySet="Phieunhap">
+          <ScalarProperty Name="ID_Phieunhap" ColumnName="ID_Phieunhap" />
+          <ScalarProperty Name="ID_Nhacungcap" ColumnName="ID_Nhacungcap" />
+          <ScalarProperty Name="Ngaytao" ColumnName="Ngaytao" />
+          <ScalarProperty Name="NguoiLapPhieu" ColumnName="NguoiLapPhieu" />
+          <ScalarProperty Name="Tongtien" ColumnName="Tongtien" />
+          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sanphams">
+      <EntityTypeMapping TypeName="Server_clothesModel.Sanpham">
+        <MappingFragment StoreEntitySet="Sanpham">
+          <ScalarProperty Name="Masanpham" ColumnName="Masanpham" />
+          <ScalarProperty Name="Tensanpham" ColumnName="Tensanpham" />
+          <ScalarProperty Name="Madanhmuc" ColumnName="Madanhmuc" />
+          <ScalarProperty Name="Mota" ColumnName="Mota" />
+          <ScalarProperty Name="Giaban" ColumnName="Giaban" />
+          <ScalarProperty Name="Gianhap" ColumnName="Gianhap" />
+          <ScalarProperty Name="Mathuonghieu" ColumnName="Mathuonghieu" />
+          <ScalarProperty Name="ID_Loai" ColumnName="ID_Loai" />
+          <ScalarProperty Name="ID_Nhacungcap" ColumnName="ID_Nhacungcap" />
+          <ScalarProperty Name="Ngaytao" ColumnName="Ngaytao" />
+          <ScalarProperty Name="Ngaycapnhat" ColumnName="Ngaycapnhat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sizes">
+      <EntityTypeMapping TypeName="Server_clothesModel.Size">
+        <MappingFragment StoreEntitySet="Size">
+          <ScalarProperty Name="ID_Size" ColumnName="ID_Size" />
+          <ScalarProperty Name="TenSize" ColumnName="TenSize" />
+          <ScalarProperty Name="ID_Loai" ColumnName="ID_Loai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Thuonghieux">
+      <EntityTypeMapping TypeName="Server_clothesModel.Thuonghieu">
+        <MappingFragment StoreEntitySet="Thuonghieu">
+          <ScalarProperty Name="Mathuonghieu" ColumnName="Mathuonghieu" />
+          <ScalarProperty Name="Tenthuonghieu" ColumnName="Tenthuonghieu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trangthaidonhangs">
+      <EntityTypeMapping TypeName="Server_clothesModel.Trangthaidonhang">
+        <MappingFragment StoreEntitySet="Trangthaidonhang">
+          <ScalarProperty Name="ID_Trangthai" ColumnName="ID_Trangthai" />
+          <ScalarProperty Name="Tentrangthai" ColumnName="Tentrangthai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

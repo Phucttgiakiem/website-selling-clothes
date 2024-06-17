@@ -1,0 +1,41 @@
+﻿@model List<Website_clothe.Models.Thuonghieu>
+
+@{
+    ViewBag.Title = "Quản lý Thương hiệu";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>Danh sách thương hiệu</h3>
+            <button class="btn btn-primary " onclick="location.href= ' @Url.Action("Create", "Brandproduct") ' ">
+                <div class="text-white">Thêm mới</div>
+            </button>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Mã thương hiệu</th>
+                        <th>Tên thương hiệu</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Mathuonghieu</td>
+                            <td>@item.Tenthuonghieu</td>
+                            <td>
+                                @Html.ActionLink("Sửa","Edit", new { id = item.Mathuonghieu }, new { @class = "btn btn-warning" })
+
+                                <a class="btn btn-danger" href="@Url.Action("Delete", "Brandproduct", new { id = item.Mathuonghieu })">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

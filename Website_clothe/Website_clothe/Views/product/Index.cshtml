@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Website_clothe.Models.Sanpham>
+
+@{ 
+    var hinh = ViewBag.Hinhanh;
+
+    
+}
+
+@functions{ 
+    public string Checkimage (string nameimg)
+    {
+        return String.IsNullOrEmpty(nameimg) ? "namempty.jpg" : nameimg;
+    }
+}
+<div class="container d-flex flex-wrap-reverse justify-content-md-evenly" style="margin:150px;">
+    @Html.Action("Menuleft","Menu")
+    <div class="col-10">
+        <div class="main-product">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="card-item">
+                        <div class="card-img-item">
+                            @foreach (var ig in hinh)
+                            {
+                                if (ig.Masanpham == item.Masanpham)
+                                {
+                                    <img src="~/Content/img/@Checkimage(ig.TenAnh)" width="200" height="200" />
+                                    break;
+                                }
+                            }
+
+                            
+                        </div>
+                        <div class="card-main" onclick="detailproduc(this)">
+                            <p id="@item.Masanpham" class="d-none"></p>
+                            <p  style="color: rgb(119, 119, 119); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px;margin:15px 0;cursor:pointer;font-size:18px" >@item.Tensanpham</p>
+                            <p>@item.Giaban - đ</p>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="d-flex justify-content-center">
+                    <p class="d-block fs-2" style="width:max-content">Không có sản phẩm hiển thị</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

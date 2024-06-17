@@ -1,0 +1,69 @@
+﻿@model Website_clothe.Models.Sanpham
+
+@{
+  
+    ViewBag.Title = "Edit-product";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Sửa thông tin sản phẩm</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Product")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    <label class="form-label">Tên sản phẩm</label>
+                    @Html.TextBoxFor(model => model.Tensanpham, new { type = "text", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Tensanpham, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Loại sản phẩm</label>
+                    @Html.DropDownListFor(model => model.ID_Loai, new SelectList(ViewBag.Loai, "ID_Loai", "Tenloai"), "Chọn loại sản phẩm", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.ID_Loai, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên chi tiết danh mục</label>
+                    @Html.DropDownListFor(model => model.Chitietdanhmuc, (IEnumerable<SelectListItem>)ViewBag.Items, "Lựa chọn danh mục", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.Chitietdanhmuc, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên thương hiệu</label>
+                    @Html.DropDownListFor(model => model.Mathuonghieu, new SelectList(ViewBag.Brand, "Mathuonghieu", "Tenthuonghieu"), "Chọn thương hiệu", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.Mathuonghieu, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên nhà cung cấp</label>
+                    @Html.DropDownListFor(model => model.ID_Nhacungcap, new SelectList(ViewBag.Nhacungcap, "Manhacungcap", "Tennhacungcap"), "Chọn nhà cung cấp", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.ID_Nhacungcap, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Giá bán (đv: đồng)</label>
+                    @Html.TextBoxFor(model => model.Giaban, new { type = "number", min = "0", value = "0", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Giaban, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Giá nhập (đv: đồng)</label>
+                    @Html.TextBoxFor(model => model.Gianhap, new { type = "number", min = "0", value = "0", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Gianhap, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mô tả</label>
+                    @Html.TextAreaFor(model => model.Mota, new { rows = "3", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Mota, "", new { @class = "text-danger" })
+                </div>
+                
+                @Html.TextBoxFor(model => model.Masanpham, new { type = "hidden" })
+                <input type="submit" class="btn btn-success" value="Submit" />
+            }
+        </div>
+    </div>
+</div>

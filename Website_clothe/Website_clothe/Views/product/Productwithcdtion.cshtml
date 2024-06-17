@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Website_clothe.Models.Sanphamcondition>
+
+
+@functions{
+    public string Checkimage(string nameimg)
+    {
+        return String.IsNullOrEmpty(nameimg) ? "namempty.jpg" : nameimg;
+    }
+}
+
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div class="card-item">
+            <div class="card-img-item">
+                <img src="~/Content/img/@Checkimage(item.tenhinhanh)" width="200" height="200" />
+                
+            </div>
+            <div class="card-main" onclick="detailproduc(this)">
+                <p id="@item.masanpham" class="d-none"></p>
+                <p style="color: rgb(119, 119, 119); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; margin: 15px 0; cursor: pointer; font-size: 18px">@item.tensanpham</p>
+                <p>@item.giaban - đ</p>
+
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="d-flex justify-content-center">
+        <p class="d-block fs-2" style="width:max-content">Không có sản phẩm hiển thị</p>
+    </div>
+}
+
+

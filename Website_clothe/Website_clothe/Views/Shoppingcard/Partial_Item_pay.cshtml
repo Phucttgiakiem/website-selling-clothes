@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Website_clothe.Models.ShoppingcardItem>
+@{ 
+    Website_clothe.Models.Shopping_card query = new Website_clothe.Models.Shopping_card();
+}
+@if (Model != null && Model.Any())
+{
+    var Tongtien = 0;
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                     <h3>Giỏ hàng</h3>
+            </div>
+           
+            <div class="card-body px-2">
+                <table class="table table-hover">
+                    @foreach (var item in Model)
+                    {
+                        Tongtien += item.totalprice;
+                        <tr>
+                            
+                            <td style="text-align:left">@item.variantproductid - @item.productname</td>
+                            <td>@String.Format("{0:#,##0}",item.totalprice) đ</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td class="ps-5 fw-bold border-0" style="text-align:left">Tổng tiền: </td>
+                        <td class="fw-medium text-danger border-0">@String.Format("{0:#,##0}", @Tongtien) đ</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+     </div>
+   
+}
+

@@ -1,0 +1,59 @@
+﻿@model List<Website_clothe.Models.Danhmucsanpham>
+@{
+    ViewBag.Title = "Home Page";
+    var query = ViewBag.Query;
+}
+
+<div class="container-fluid">
+    <div class="row mb-5 slider_animation" style="position:relative;z-index:0;">
+        <div id="carouselExample" class="carousel slide m-0 p-0">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/Content/img/1._cnf_tri_an_top_banner_desktop.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Content/img/top_banner_desktop_3.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Content/img/1._cnf_tri_an_top_banner_desktop.png" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <div class="row m-2 d-flex justify-content-center">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <div class="row mb-4">
+                    <h5 class="col-12 p-4 w-100 m-0 " style="font-weight:bold">@item.Tendanhmuc</h5>
+                    <div class="card-slider">
+
+                        @foreach (var item2 in query)
+                        {
+                            if (item2.Madanhmuc == item.Madanhmuc)
+                            {
+                                <div class="item-card">
+                                        <img src="~/Content/img/@item2.HinhAnh" class="item-img" alt="...">
+                                        <div class="main-card">
+                                            <p class="text-card p-0 m-0 fs-3">@item2.Tenchitietdanhmuc</p>
+                                            <a href="~/product/index?id=@item2.ID_Chitietdanhmuc" class="fs-6 p-2 mt-3" >Xem thêm</a>
+                                        </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+

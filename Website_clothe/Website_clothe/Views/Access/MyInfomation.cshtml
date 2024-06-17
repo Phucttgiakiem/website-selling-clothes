@@ -1,0 +1,81 @@
+﻿@{ 
+
+}
+
+<style>
+    .menu-func ul{
+        padding:0;
+        margin:0;
+    }
+    .menu-func ul li:hover{
+        background-color:rgb(233, 233, 233)
+    }
+    .menu-func ul li{
+        height:45px;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+    }
+    .menu-func ul li p{
+        display:block;
+        width:max-content;
+        margin:0;
+        padding: 0 20px;
+        line-height:30px;
+        font-size:20px;
+    }
+    .menu-func ul li{
+        list-style-type:none;
+        
+    }
+    .menu-func li a{
+        text-decoration:none;
+        color:black;
+        width:100%;
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        height:45px;
+        padding:0 30px;
+    }
+</style>
+<div class="container-fluid" >
+    <div class="row justify-content-around" style="margin:160px 40px 160px">
+        <div class="col-3 rounded-1 bg-light p-0">
+            <div class="m-3 d-flex flex-column align-items-center">
+                <div class="pb-2">
+                    <img id="avatarImg" src="~/Content/img/avatar.jpg" class="img-thumbnail rounded-circle mx-auto d-block w-50 h-50" alt="hinhdaidien" />
+                    
+                </div>
+                
+            </div>
+            <div class="menu-func">
+                <ul>
+                    <li>
+                        <a href="#" class="btnseeinfo">
+                            <i class="far fa-id-card"></i>
+                            <p>Thông tin cá nhân</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn-Seebill">
+                            <i class="fas fa-shopping-bag"></i>
+                            <p>Đơn hàng đã đặt</p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/Access/Logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <p>Thoát</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-8 rounded-1 bg-light" id="resuil_rs">
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/xulyuserinfo.js"></script>

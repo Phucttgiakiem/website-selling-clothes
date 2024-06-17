@@ -1,0 +1,314 @@
+﻿@model Website_clothe.Models.billofimport
+
+@*<style>
+        .bigger_parent{
+            display:flex;
+            flex-direction:row;
+            width:100%;
+            justify-content:center;
+        }
+        .child_parent{
+            display:flex;
+            flex-direction:column;
+            padding:0 10px 0;
+            width:80%;
+            justify-content:center;
+        }
+        .child_1{
+            display:flex;
+            flex-direction:row;
+            justify-content:space-between;
+        }
+        .child_1_1, {
+            width:245px;
+            height:max-content;
+            display:flex;
+            flex-direction:column;
+        }
+        .child_1_2_1, .child_1_2_2 {
+            width: 245px;
+            height: max-content;
+            display: flex;
+            flex-direction:row;
+            margin:0;
+            padding:0;
+        }
+        .child_1_2_1 p,.child_1_2_2 p{
+            margin-right:20px;
+        }
+        .child_1_1 p {
+            margin-bottom: 20px;
+        }
+        .child_2{
+            width:100%;
+            display:flex;
+            justify-content:center;
+        }
+        .child_3{
+            width:100%;
+            display:flex;
+            flex-direction:row;
+        }
+        .child_3_sub{
+            width:250px;
+            display:flex;
+            flex-direction:column;
+        }
+        .sub_1,.sub_2{
+            display:flex;
+            flex-direction:row;
+            justify-content:space-evenly;
+            width:100%;
+            height:max-content;
+        }
+    </style>
+
+    <div class="bigger_parent">
+        <div class="child_parent">
+            <div class="child_1">
+                <div class="child_1_1">
+                    <p>CỬA HÀNG FASHION</p>
+                    <p>Số 6, Phường 9, Quận 10, Tp. Hồ Chí Minh </p>
+                </div>
+                <div class="child_1_2">
+                    <div class="child_1_2_1">
+                        <p>Số phiếu: </p>
+                        <p>@Model.ID_phieunhap</p>
+                    </div>
+                    <div class="child_1_2_2">
+                        <p>Ngày: </p>
+                        <p>@Model.ngaynhap</p>
+                    </div>
+                </div>
+            </div>
+            <div class="child_2">
+                <h4>PHIẾU NHẬP HÀNG</h4>
+            </div>
+            <div class="child_3">
+                <div class="child_3_sub">
+                    <div class="sub_1">
+                        <div style="display:flex;flex-direction:row;width:300px;align-items:center">
+                            <p style="margin-right:20px;width:min-content; display:block">Nhà cung cấp:</p>
+                            <p style="width: min-content;display:block">@Model.tennhacungcap</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row; width: 300px">
+                            <p style="margin-right: 20px; width: min-content;display:block">Số điện thoại:</p>
+                            <p style="width: min-content;display:block">@Model.sodt</p>
+                        </div>
+                    </div>
+                    <div class="sub_2">
+
+                            <p>Địa chỉ:</p>
+                            <p>@Model.diachi</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="child_4">
+                <table class="">
+                    <thead>
+                        <tr class="">
+                            <th>STT</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên hàng</th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach (var item in Model.ctbill)
+                        {
+                            int thanhtien = item.quality * item.prices;
+                            int i = 1;
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.idsp</td>
+                                <td>@item.namepd - @item.sizes - @item.color</td>
+                                <td>@item.quality</td>
+                                <td>@String.Format("{0:#,##0}", item.prices)</td>
+                                <td>
+                                    @String.Format("{0:#,##0}", thanhtien)
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div style="width:100%;display:flex;flex-direction:column;justify-content:left;margin-top:30px">
+                <div style="display:flex;flex-direction:row">
+                    <div style="margin-right:20px;"><p>Ghi chú:</p></div>
+                    <div><p>@Model.ghichu</p></div>
+                </div>
+                <div style="display:flex;flex-direction:row">
+                    <div style="margin-right:20px"><p >Tổng đơn:</p></div>
+                    <div ><p>@String.Format("{0:#,##0}", Model.tongtiennhap) đồng</p></div>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:row;justify-content:space-between">
+                <div style="display:flex;flex-direction:column;align-items:center">
+                    <p style="margin:0">Người đặt hàng</p>
+                    <p style="margin:0">(ký tên)</p>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center">
+                    <p style="margin:0">Người giao hàng</p>
+                    <p style="margin:0">(Ký tên)</p>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<style>
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .invoice-container {
+        width: 80%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .invoice-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .store-info {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .invoice-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+        .invoice-details p {
+            margin: 5px 0;
+        }
+
+    .supplier-info,
+    .delivery-info {
+        margin-bottom: 20px;
+    }
+
+        .supplier-info p,
+        .delivery-info p {
+            margin: 5px 0;
+        }
+
+    .product-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .product-table th,
+        .product-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .product-table th {
+            background-color: #f2f2f2;
+        }
+
+    .additional-info {
+        margin-top: 30px;
+    }
+
+        .additional-info p {
+            margin-bottom: 5px;
+        }
+
+    .signatures {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+        .signatures div {
+            text-align: center;
+        }
+</style>
+
+<div class="invoice-container">
+    <div class="invoice-header">
+        <h4>PHIẾU NHẬP HÀNG</h4>
+    </div>
+
+    <div class="store-info">
+        <p>CỬA HÀNG FASHION</p>
+        <p>Số 6, Phường 9, Quận 10, Tp. Hồ Chí Minh </p>
+    </div>
+
+    <div class="invoice-details">
+        <div class="supplier-info">
+            <p>Nhà cung cấp: @Model.tennhacungcap</p>
+            <p>Số điện thoại: @Model.sodt</p>
+        </div>
+        <div class="invoice-number">
+            <p>Số phiếu: @Model.ID_phieunhap</p>
+            <p>Ngày: @Model.ngaynhap</p>
+        </div>
+    </div>
+
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã sản phẩm</th>
+                <th>Tên hàng</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ctbill)
+            {
+                int thanhtien = item.quality * item.prices;
+                int i = 1;
+                <tr>
+                    <td>@i</td>
+                    <td>@item.idsp</td>
+                    <td>@item.namepd - @item.sizes - @item.color</td>
+                    <td>@item.quality</td>
+                    <td>@String.Format("{0:#,##0}", item.prices)</td>
+                    <td>@String.Format("{0:#,##0}", thanhtien)</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+
+    <div class="additional-info">
+        <p>Ghi chú: @Model.ghichu</p>
+        <p>Tổng đơn: @String.Format("{0:#,##0}", Model.tongtiennhap) đồng</p>
+    </div>
+
+    <div class="signatures">
+        <div>
+            <p>Người đặt hàng</p>
+            <p>(Ký tên)</p>
+        </div>
+        <div>
+            <p>Người giao hàng</p>
+            <p>(Ký tên)</p>
+        </div>
+    </div>
+</div>
+

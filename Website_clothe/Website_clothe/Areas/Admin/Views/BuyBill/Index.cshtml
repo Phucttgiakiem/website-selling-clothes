@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Website_clothe.Models.Donmuahang>
+@{ 
+    ViewBag.Title = "Quản lý đơn hàng";
+}
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h3>Danh sách đơn hàng</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Tên người đặt hàng</th>
+                        <th>Tổng đơn</th>
+                        <th>Ngày tạo</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID_Donhang</td>
+                            <td>@item.Tennguoidung</td>
+                            <td>@item.Tongdonhang đ</td>
+                            <td>@item.Ngaytao.Value.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a class="btn btn-danger" href="@Url.Action("DeleteBill", "BuyBill", new { id = item.ID_Donhang })">Xóa</a>
+                                <a class="btn btn-info" href="@Url.Action("Detail", "BuyBill", new { id = item.ID_Donhang })">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

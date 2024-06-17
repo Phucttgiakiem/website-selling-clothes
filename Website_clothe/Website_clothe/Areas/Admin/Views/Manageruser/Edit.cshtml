@@ -1,0 +1,60 @@
+﻿@model Website_clothe.Models.Nguoidung
+
+@{
+
+    ViewBag.Title = "Edit-UserAdmin";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container-fluid mt-4 px-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Sửa thông tin Admin</h4>
+            <button class="btn btn-info " onclick="location.href='@Url.Action("Index", "Manageruser")'">
+                <div class="text-white">Quay lại</div>
+            </button>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "Manageruser", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    <label class="form-label">Tên Admin</label>
+                    @Html.TextBoxFor(model => model.Tennguoidung, new { type = "text", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Tennguoidung, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ngày sinh:</label>
+                    @Html.TextBox("Ngaysinh", String.Format("{0:yyyy-MM-dd}", Model.Ngaysinh), new { @type = "date", @class = "w-100  form-control", @name = "Ngaysinh", required = "required" })
+                    @Html.ValidationMessageFor(model => model.Ngaysinh, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Địa chỉ:</label>
+                    @Html.TextBoxFor(model => model.Diachi, new { type = "text", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Diachi, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Số điện thoại:</label>
+                    @Html.TextBoxFor(model => model.SoDT, new { type = "text", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email:</label>
+                    @Html.TextBoxFor(model => model.Email, new { type = "text", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Username:</label>
+                    @Html.TextBoxFor(model => model.Username, new { type = "text", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.TextBoxFor(model => model.ID_Nguoidung, new { type = "hidden" })
+                <input type="submit" class="btn btn-success" value="Submit" />
+            }
+        </div>
+    </div>
+</div>

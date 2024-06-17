@@ -1,0 +1,21 @@
+﻿@{ 
+    ViewBag.Title = "Shopping_card";
+    
+}
+<div class="container-fluid " style="margin-top:160px;margin-bottom:160px">
+    <div class="row mx-4">
+        <div class="col-12" id="load_data_shopping">
+            @Html.Action("Partial_Item_Cart","Shoppingcard")
+        </div>
+        <div class="col-12 my-4 " id="reset-content">
+            @if(ViewBag.Checkcard != null)
+            {
+                
+                <div style="text-align:right">
+                    <a href="#" class="btn btn-danger btnDeleteAll">Xóa tất cả</a>
+                    <a href="/Shoppingcard/CheckOut" class="btn btn-success">Thanh toán</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
